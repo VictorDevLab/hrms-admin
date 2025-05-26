@@ -1,40 +1,47 @@
-<script setup>
-import Navbar from './components/Navbar.vue'
-</script>
-
 <template>
-
-
-  <main>
-    <Navbar />
-  </main>
+  <div id="app">
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+    </nav>
+    <router-view/>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<script setup>
+
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+nav {
+  padding: 30px;
+  text-align: center;
+  background-color: #f8f9fa;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+  text-decoration: none;
+  margin: 0 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+nav a:hover {
+  background-color: #e9ecef;
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+nav a.router-link-exact-active {
+  color: #42b883;
+  background-color: #e8f5e8;
 }
 </style>
