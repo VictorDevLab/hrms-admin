@@ -5,7 +5,7 @@ import About from '../pages/About.vue'
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home
   },
   {
@@ -38,15 +38,15 @@ const routes = [
 //     name: 'Profile',
 //     component: () => import('../pages/Profile.vue')
 //   },
-//   {
-//     path: '/settings',
-//     name: 'Settings',
-//     component: () => import('../pages/Settings.vue')
-//   }
-]
 
+  {
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
+    component: () => import('../pages/NotFound/index.vue')
+  }
+]
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
 

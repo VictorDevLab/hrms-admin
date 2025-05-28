@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <MainLayout>
+    <Login v-if="!loggedIn" @login="handleLogin"/>
+    <MainLayout v-else>
       <router-view/>
     </MainLayout>
   </div>
@@ -8,6 +9,15 @@
 
 <script setup>
 import MainLayout from './components/MainLayout.vue'
+import Login from './pages/Login/index.vue'
+import {ref} from 'vue'
+
+const loggedIn = ref(false)
+
+const handleLogin = (value) => {
+  loggedIn.value = true
+  console.log('User logged in:', value);
+}
 </script>
 
 <style>
@@ -16,7 +26,6 @@ import MainLayout from './components/MainLayout.vue'
   font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
 }
 
 nav {
