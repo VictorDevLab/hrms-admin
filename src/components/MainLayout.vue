@@ -105,7 +105,7 @@
         </v-navigation-drawer>
 
         <!-- App Bar -->
-        <v-app-bar color="white" elevation="1" height="64">
+        <v-app-bar color="grey-lighten-4" elevation="0" height="64">
             <!-- Hamburger menu for mobile -->
             <v-app-bar-nav-icon v-if="$vuetify.display.mobile" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -173,16 +173,18 @@ const drawer = ref(true)
 const rail = ref(false)
 
 const menuItems = ref([
-  { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
-  { title: 'My Work', icon: 'mdi-briefcase', route: '/my-work' },
-  { title: 'HR Self Service', icon: 'mdi-account-group', route: '/hr-self-service' },
-  { title: 'My Trainings', icon: 'mdi-school', route: '/trainings' },
-  { title: 'Admin Central', icon: 'mdi-shield-account', route: '/admin-central' },
-  { title: 'Employee Transition', icon: 'mdi-account-switch', route: '/employee-transition' },
-  { title: 'Payroll Central', icon: 'mdi-cash-multiple', route: '/payroll-central' },
-  { title: 'Performance Hub', icon: 'mdi-chart-line', route: '/performance' },
-  { title: 'Assets', icon: 'mdi-laptop', route: '/assets' },
-  { title: 'Reports', icon: 'mdi-file-chart', route: '/reports' }
+  { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/', color: 'blue' },
+  { title: 'My Work', icon: 'mdi-briefcase', route: '/my-work', color: 'orange' },
+  { title: 'HR Self Service', icon: 'mdi-account-group', route: '/hr-self-service', color: 'green' },
+  { title: 'Admin Central', icon: 'mdi-shield-account', route: '/admin-central', color: 'deep-purple' },
+  { title: 'My Team', icon: 'mdi-account-multiple', route: '/my-team', color: 'yellow' },
+  { title: 'My Projects', icon: 'mdi-folder-multiple', route: '/my-projects', color: 'light-blue' },
+  { title: 'My Trainings', icon: 'mdi-school', route: '/trainings', color: 'pink' },
+  { title: 'Employee Transition', icon: 'mdi-account-switch', route: '/employee-transition', color: 'red' },
+  { title: 'Payroll Central', icon: 'mdi-cash-multiple', route: '/payroll-central', color: 'green' },
+  { title: 'Performance Hub', icon: 'mdi-chart-line', route: '/performance', color: 'red' },
+  { title: 'Assets', icon: 'mdi-laptop', route: '/assets', color: 'red' },
+  { title: 'Reports', icon: 'mdi-file-chart', route: '/reports', color: 'red' }
 ])
 const secondaryMenuItems = ref([
     {
