@@ -27,7 +27,7 @@
                   />
                   <div class="mt-8">
                     <h2 class="text-h4 text-white font-weight-regular mb-4 d-none d-lg-block">
-                      Simple yet powerful HRMS for businesses
+                      Simple yet powerful HRMS for businesses 
                     </h2>
                     <p class="text-subtitle-1 text-grey-lighten-1 d-none d-lg-block">
                       Track expenses, customize invoices, run reports and even more all from one place
@@ -75,7 +75,6 @@
                               type="email"
                               variant="outlined"
                               density="comfortable"
-                             
                               required
                             />
 
@@ -129,11 +128,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import keyhole from "@/assets/keyhole.svg"
 import loginSvg from "@/assets/loginSvg.svg"
 import bgimage from "@/assets/bg-image.png"
 
-const route = useRoute()
+const authStore = useAuthStore()
+const router = useRoute()
 const environment = process.env.NODE_ENV
 //const auth = useAuth()
 const redirecting = ref(false)
@@ -146,8 +147,8 @@ const snackbar = ref({
   color: 'error',
   timeout: 5000
 })
-const email = "email"
-const password = 'password'
+const email = ref("")
+const password = ref("")
 
 const showSnackbar = (text, color = 'error') => {
   snackbar.value = {
@@ -166,34 +167,23 @@ const props = defineProps({
 })
 const emit = defineEmits(['login'])
 
-const login = () => {
+const login = async () => {
   isSubmitting.value = true
-  console.log('Logging in...')
-  emit('login', true)
-}
-
-const msLogin = async () => {
-  const idToken = route.query?.idToken
-  if (idToken) {
-    redirecting.value = true
-    try {
-      const auth = useAuthState()
-      const res = await _fetch('/v1/azure/authorize', { 
-        body: { idToken }, 
-        method: "POST" 
-      })
-      auth.data.value = { user: {...res.data.user, outLookLogin: true} }
-      auth.setToken(res.data.tokens)
-      await router.push('/')
-    } catch (e) {
-      showSnackbar("User not found")
-    }
+  try {
+   const success = await authStore.login(email.value, password.value)
+  if(success) {
+    showSnackbar('Login successful!', 'success')
+    isSubmitting.value = false
+    email.value = ""
+    password.value = ""
+  } 
+  } catch (error) {
+    console.error('Login error:', error)
+    showSnackbar('An error occurred while logging in.', error)
+    isSubmitting.value = false
+    return
   }
 }
-
-onMounted(async () => {
-  await msLogin()
-})
 </script>
 
 <style scoped>

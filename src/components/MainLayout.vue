@@ -1,12 +1,11 @@
 <template>
     <v-app>
         <!-- Navigation Drawer / Sidebar -->
-        <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false" color="white-darken-4"
-            theme="light" width="280" rail-width="72"  class="ma-0 pa-0" style="border-right: 7px solid #e0e0e0;">
+        <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false" color="grey-lighten-5"
+            theme="light" width="280" rail-width="72" class="ma-0 pa-0" style="border-right: 7px solid #e0e0e0;">
             <!-- Company Logo -->
             <div class="pa-4 text-center" v-show="!rail">
-                <v-img src="/src/assets/logo.png" alt="Company Logo"
-                  class="mx-auto"></v-img>
+                <v-img src="/src/assets/logo.png" alt="Company Logo" class="mx-auto"></v-img>
             </div>
 
             <!-- User Profile Section -->
@@ -20,7 +19,7 @@
                 </template>
 
                 <v-list-item-title v-show="!rail" class="font-weight-bold text-md-h6 mr-2">
-                   Victor K Dev
+                    Victor K Dev
                 </v-list-item-title>
                 <v-list-item-subtitle v-show="!rail" class="text-grey-darken-4 mr-2">
                     Senior Developer
@@ -33,17 +32,6 @@
             </v-list-item>
 
             <v-divider class="my-3"></v-divider>
-
-            <!-- Main Navigation Items -->
-            <!-- <v-list density="compact" nav class="px-2">
-                <v-list-item v-for="item in menuItems" :key="item.title" :to="item.route" color="white"
-                    class="mb-2 custom-list-item" rounded="lg">
-                    <template v-slot:prepend>
-                        <v-icon :icon="item.icon" :color="item.color || 'primary'" class="mr-2 custom-icon" />
-                    </template>
-                    <span class="custom-text">{{ item.title }}</span>
-                </v-list-item>
-            </v-list> -->
             <v-list class="pt-0 darkBlue-heading-text ml-2">
                 <v-list-item v-for="item in menuItems" :key="item.title" :to="item.route">
                     <v-list-item-content>
@@ -61,20 +49,7 @@
             </v-list>
 
             <v-divider class="my-3"></v-divider>
-
-            <!-- Secondary Menu Items -->
-            <!-- <v-list density="compact" nav class="px-2">
-                <v-list-subheader v-show="!rail" class="text-grey-lighten-1">
-                    TOOLS & SETTINGS
-                </v-list-subheader>
-                <v-list-item v-for="item in secondaryMenuItems" :key="item.title" :prepend-icon="item.icon"
-                    :title="item.title" :to="item.route" color="white" class="mb-1" rounded="lg">
-                    <template v-slot:prepend>
-                        <v-icon :icon="item.icon" class="me-3"></v-icon>
-                    </template>
-                </v-list-item>
-            </v-list> -->
-             <v-list class="pt-0 darkBlue-heading-text ml-2">
+            <v-list class="pt-0 darkBlue-heading-text ml-2">
                 <v-list-item v-for="item in secondaryMenuItems" :key="item.title" :to="item.route">
                     <v-list-item-content>
                         <v-list-item-title class="darkBlue-heading-text d-flex justify-start"
@@ -93,12 +68,27 @@
             <!-- Bottom Section -->
             <template v-slot:append>
                 <v-divider></v-divider>
-                <v-list density="compact" nav class="px-2 pb-3">
-                    <v-list-item prepend-icon="mdi-logout" title="Logout" @click="logout" color="red-lighten-1"
+                <!-- <v-list density="compact" nav class="px-2 pb-3">
+                    <v-list-item prepend-icon="mdi-logout" title="Logout" @click="logout" color="red"
                         class="mt-2" rounded="lg">
                         <template v-slot:prepend>
                             <v-icon icon="mdi-logout" class="me-3"></v-icon>
                         </template>
+                </v-list-item>
+            </v-list> -->
+                <v-list class="pt-0 darkBlue-heading-text ml-2">
+                    <v-list-item @click="logout" class="ml-2">
+                        <v-list-item-content>
+                            <v-list-item-title class="darkBlue-heading-text d-flex justify-start"
+                                style="font-size: 14px; width: 100%">
+                                <div class="d-flex align-center" style="width: 100%">
+                                    <v-icon color="red" class="mr-2 custom-icon">mdi-logout</v-icon>
+                                    <span style="white-space: nowrap">
+                                        Logout
+                                    </span>
+                                </div>
+                            </v-list-item-title>
+                        </v-list-item-content>
                     </v-list-item>
                 </v-list>
             </template>
@@ -161,16 +151,28 @@
             </v-container>
         </v-main>
     </v-app>
+    <v-dialog v-model="logoutDialog" width="500">
+        <v-card max-width="500">
+            <v-card-title class="text-center">Logging Out...</v-card-title>
+            <v-card-text class="text-center">
+                <v-progress-circular indeterminate color="red" size="64"></v-progress-circular>
+                <!-- <p class="mt-4">Logging Out...</p>   -->
+            </v-card-text>
+        </v-card>
+    </v-dialog>
 </template>
 
 
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const drawer = ref(true)
 const rail = ref(false)
+const authStore = useAuthStore()
+
 
 const menuItems = ref([
   { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/', color: 'blue' },
@@ -199,10 +201,14 @@ const secondaryMenuItems = ref([
     },
 
 ])
+const logoutDialog = ref(false)
 
 const logout = () => {
-  // Handle logout logic here
-  console.log('Logout clicked')
+    logoutDialog.value = true
+    setTimeout(() => {
+        console.log("Logging out...")
+        authStore.logout()
+    }, 2300) 
 }
 </script>
 
