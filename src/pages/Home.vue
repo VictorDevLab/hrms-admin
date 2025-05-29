@@ -1,5 +1,5 @@
 <template>
-    <div style="background-color: #F5F5F5;">
+    <div>
         <!-- Welcome Section -->
         <v-row class="mb-6">
             <v-col cols="9">

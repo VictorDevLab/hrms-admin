@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Login v-if="!loggedIn" @login="handleLogin"/>
+    <Login v-if="!authStore.isAuthenticated"/>
     <MainLayout v-else>
       <router-view/>
     </MainLayout>
@@ -11,17 +11,18 @@
 import MainLayout from './components/MainLayout.vue'
 import Login from './pages/Login/index.vue'
 import {ref} from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
-const loggedIn = ref(false)
+const authStore = useAuthStore()
 
-const handleLogin = (value) => {
-  loggedIn.value = true
-  console.log('User logged in:', value);
-}
+const token = ref(authStore.token)
 </script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
+* {
+  font-family: 'Rubik', sans-serif;
+}
 #app {
   font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
