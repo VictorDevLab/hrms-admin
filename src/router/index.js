@@ -18,11 +18,11 @@ const routes = [
 //     name: 'HRSelfService',
 //     component: () => import('../pages/HRSelfService.vue')
 //   },
-//   {
-//     path: '/admin-central',
-//     name: 'AdminCentral',
-//     component: () => import('../pages/AdminCentral.vue')
-//   },
+  {
+    path: '/admin-central',
+    name: 'AdminCentral',
+    component: () => import('../pages/AdminCentral/index.vue')
+  },
 //   {
 //     path: '/payroll-central',
 //     name: 'PayrollCentral',
