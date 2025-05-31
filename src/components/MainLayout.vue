@@ -210,6 +210,11 @@ const logout = () => {
         authStore.logout()
     }, 2300) 
 }
+const isTokenExpired = () => {
+ if (authStore.value === null) return true;
+ else return false
+}
+
 </script>
 
 <style scoped>

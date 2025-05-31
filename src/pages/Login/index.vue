@@ -179,7 +179,7 @@ const login = async () => {
   } 
   } catch (error) {
     console.error('Login error:', error)
-    showSnackbar('An error occurred while logging in.', error)
+    showSnackbar('An error occurred while logging in.', "error")
     isSubmitting.value = false
     return
   }
@@ -199,7 +199,7 @@ const login = async () => {
   height: 40px;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
   .logo-img {
     height: auto;
   }

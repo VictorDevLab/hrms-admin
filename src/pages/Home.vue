@@ -182,15 +182,6 @@ const navigateTo = (route) => {
     background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf5 100%);
     position: relative;
 }
-
-.quick-action-card {
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-
-.quick-action-card:hover {
-    transform: translateY(-2px);
-}
 .h1 {
     font-size: 1.6rem;
 }
