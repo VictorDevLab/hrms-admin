@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="pa-6">
     <!-- Header Section -->
-    <v-row class="mb-4">
+    <v-row class="mb-1">
       <v-col cols="12" md="4">
         <v-card class="pa-4">
           <div class="d-flex align-center justify-space-between mb-3">
@@ -22,7 +22,6 @@
             border="start" 
             border-color="orange"
             class="mb-4"
-            closable
           >
             <div class="d-flex align-center">
               <span>84 Approval Requests are pending</span>
@@ -124,7 +123,7 @@
       <v-col cols="12" md="4">
         <v-card class="pa-4" style="height: 100%;">
           <div class="d-flex align-center justify-space-between mb-3">
-            <h3 class="text-h6">Organization (69)</h3>
+            <h2 class="" style="font-size: 16px;">Organization (69)</h2>
             <v-select
               v-model="selectedOrgFilter"
               :items="orgFilters"
@@ -160,42 +159,38 @@
     </v-row>
 
     <!-- Projects and Tasks Stats -->
-    <v-row class="mb-4">
-      <v-col cols="12" md="4">
-        <v-card class="pa-4 text-center">
-          <v-icon size="50" color="blue" class="mb-2">mdi-folder-multiple</v-icon>
-          <div class="text-h4 font-weight-bold mb-1">7</div>
-          <div class="text-body-1">Total Projects</div>
-          <div class="d-flex justify-center mt-2">
-            <v-chip size="small" color="green" class="me-1">3</v-chip>
-            <v-chip size="small" color="orange" class="me-1">1</v-chip>
-            <v-chip size="small" color="green">3</v-chip>
-          </div>
+     <v-row class="mb-2">
+        <v-col cols="12">
+            <v-card class="pa-3 text-center d-flex justify-center align-center">
+            <v-col cols="4">
+               <div class="text-body-1">Total Projects</div>
+               <v-icon size="45" color="#0064D7" class="mb-2">mdi-folder-multiple</v-icon>
+               <div class="text-h4 font-weight-bold mb-1">7</div>
+                <div class="d-flex justify-center mt-2">
+                    <v-chip size="small" color="green" class="me-1">3</v-chip>
+                    <v-chip size="small" color="orange" class="me-1">1</v-chip>
+                    <v-chip size="small" color="green">3</v-chip>
+                </div>
+            </v-col>
+            <v-col cols="4">
+                <div class="text-body-1">Total Tasks</div>
+                <v-icon size="45" color="blue" class="mb-2">mdi-format-list-checks</v-icon>
+                <div class="text-h4 font-weight-bold mb-1">0</div>
+            </v-col>
+            <v-col cols="4">
+              <div class="text-body-1 mb-2">Tasks Statistics</div>
+              <v-icon size="45" color="blue" class="mb-2">mdi-chart-bar</v-icon>
+              <div class="text-h4 font-weight-bold">0</div>
+            </v-col> 
         </v-card>
-      </v-col>
-      
-      <v-col cols="12" md="4">
-        <v-card class="pa-4 text-center">
-          <v-icon size="50" color="blue" class="mb-2">mdi-format-list-checks</v-icon>
-          <div class="text-h4 font-weight-bold mb-1">0</div>
-          <div class="text-body-1">Total Tasks</div>
-        </v-card>
-      </v-col>
-
-      <v-col cols="12" md="4">
-        <v-card class="pa-4 text-center">
-          <v-icon size="50" color="blue" class="mb-2">mdi-chart-bar</v-icon>
-          <div class="text-body-1 mb-2">Tasks Statistics</div>
-          <div class="text-h4 font-weight-bold">0</div>
-        </v-card>
-      </v-col>
+    </v-col>
     </v-row>
 
     <!-- Bottom Section -->
     <v-row>
       <!-- Ongoing Tasks -->
       <v-col cols="12" md="6">
-        <v-card class="pa-4">
+        <v-card class="pa-4 overflow-y-auto" height="500">
           <h3 class="text-h6 mb-4">Ongoing Tasks (75)</h3>
           
           <v-list>
@@ -217,7 +212,45 @@
                 </div>
               </template>
             </v-list-item>
+            <v-divider class="my-2"></v-divider>
+            <v-list-item class="px-0">
+              <template #prepend>
+                <v-icon color="blue">mdi-file-document</v-icon>
+              </template>
+              
+              <v-list-item-title>Create Employment contract</v-list-item-title>
+              <v-list-item-subtitle>Jun 01, 2025</v-list-item-subtitle>
 
+              <template #append>
+                <div class="d-flex align-center">
+                  <v-avatar size="24">
+                    <v-img src="https://i.pravatar.cc/150?img=2"></v-img>
+                  </v-avatar>
+                  <v-chip size="small" color="red" class="ms-2">HIGH</v-chip>
+                  <v-chip size="small" color="blue" variant="outlined" class="ms-2">Created</v-chip>
+                </div>
+              </template>
+            </v-list-item>
+            <v-divider class="my-2"></v-divider>
+            <v-list-item class="px-0">
+              <template #prepend>
+                <v-icon color="blue">mdi-file-document</v-icon>
+              </template>
+              
+              <v-list-item-title>Create Employment contract</v-list-item-title>
+              <v-list-item-subtitle>Jun 01, 2025</v-list-item-subtitle>
+
+              <template #append>
+                <div class="d-flex align-center">
+                  <v-avatar size="24">
+                    <v-img src="https://i.pravatar.cc/150?img=2"></v-img>
+                  </v-avatar>
+                  <v-chip size="small" color="red" class="ms-2">HIGH</v-chip>
+                  <v-chip size="small" color="blue" variant="outlined" class="ms-2">Created</v-chip>
+                </div>
+              </template>
+            </v-list-item>
+            <v-divider class="my-2"></v-divider>
             <v-list-item class="px-0">
               <template #prepend>
                 <v-icon color="blue">mdi-file-document</v-icon>
@@ -242,10 +275,21 @@
 
       <!-- Ongoing Projects -->
       <v-col cols="12" md="6">
-        <v-card class="pa-4">
+        <v-card class="pa-4 overflow-y-auto" height="500">
           <h3 class="text-h6 mb-4">Ongoing Projects (7)</h3>
           
           <v-list>
+            <v-list-item class="px-0">
+              <template #prepend>
+                <v-avatar size="40">
+                  <v-img src="https://i.pravatar.cc/150?img=3"></v-img>
+                </v-avatar>
+              </template>
+              
+              <v-list-item-title class="font-weight-medium">Talk meeting</v-list-item-title>
+              <v-list-item-subtitle>0/0 Task Done</v-list-item-subtitle>
+            </v-list-item>
+            <v-divider class="my-2"></v-divider>
             <v-list-item class="px-0">
               <template #prepend>
                 <v-avatar size="40">
