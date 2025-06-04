@@ -1,6 +1,5 @@
 <template>
   <v-container fluid class="pa-6">
-    <!-- Header Section -->
     <v-row class="mb-1">
       <v-col cols="12" md="4">
         <v-card class="pa-4">
