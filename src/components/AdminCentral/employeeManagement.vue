@@ -23,14 +23,14 @@
         <v-row class="pa-0">
           <v-col cols="6">
             <div class="d-flex justify-center">
-              <v-col cols="2" align-self="center">
+              <v-col cols="2" md="3" align-self="center">
                 <v-icon
                   color="blue-accent-3"
                   size="x-large"
                   icon="mdi-face-man"
                 ></v-icon>
               </v-col>
-              <v-col cols="10">
+              <v-col cols="10" md="9">
                 <h2>60(88%)</h2>
                 <span>Male Employees</span>
               </v-col>
@@ -41,14 +41,14 @@
           </v-col>
           <v-col cols="6">
             <div class="d-flex">
-              <v-col cols="2" align-self="center">
+              <v-col cols="2" md="3" align-self="center">
                 <v-icon
                   color="pink-accent-3"
                   size="x-large"
                   icon="mdi-face-woman"
                 ></v-icon>
               </v-col>
-              <v-col cols="10">
+              <v-col cols="10" md="9">
                 <h2>10(18%)</h2>
                 <span>Female Employees</span>
               </v-col>
@@ -56,13 +56,20 @@
           </v-col>
         </v-row>
         </v-col>
-      <v-col cols="12" md="4" class="text-center">
-        <v-icon
-          color="blue-accent-3"
-          size="x-large"
-          icon="mdi-account-multiple-plus"
-        ></v-icon>
-      </v-col>
+     <v-col cols="12" md="4" class="text-center">
+      <v-tooltip location="bottom">
+        <template #activator="{ props }">
+          <v-icon
+            v-bind="props"
+            color="blue-accent-4"
+            size="x-large"
+            icon="mdi-account-multiple-plus"
+            class="cursor-pointer mt-4 ml-0"
+          />
+        </template>
+        <span>Add New Employee</span>
+      </v-tooltip>
+    </v-col>
     </v-row>
 
     <!-- Employee List -->
@@ -73,7 +80,7 @@
         cols="12"
         sm="6"
         md="4"
-        lg="2"
+        lg="3"
       >
         <v-card
           class="employee-card"
