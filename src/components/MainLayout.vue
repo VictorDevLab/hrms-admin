@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <!-- Navigation Drawer / Sidebar -->
-        <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false" color="grey-lighten-5"
+        <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false" color="white"
             theme="light" width="280" rail-width="72" class="ma-0 pa-0" style="border-right: 7px solid #e0e0e0;">
             <!-- Company Logo -->
             <div class="pa-4 text-center" v-show="!rail">
@@ -145,8 +145,8 @@
         </v-app-bar>
 
         <!-- Main Content -->
-        <v-main>
-            <v-container fluid class="pa-6">
+        <v-main class="" style="background-color: #F5F5F5; min-height: calc(100vh - 64px);">
+            <v-container fluid>
                 <router-view />
             </v-container>
         </v-main>

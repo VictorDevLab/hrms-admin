@@ -32,6 +32,7 @@
   <script setup>
   import { ref } from 'vue'
   import AdminCentral from '@/components/AdminCentral/central.vue'
+  import EmployeeManagement from '@/components/AdminCentral/employeeManagement.vue'
   
   const selectedCard = ref('#admin-central');
 
