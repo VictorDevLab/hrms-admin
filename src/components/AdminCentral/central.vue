@@ -83,7 +83,7 @@
             ></v-select>
           </div>
 
-          <div class="upcoming-leaves">
+          <div class="upcoming-leaves custom-scrollbar">
             <v-list density="compact">
               <v-list-item
                 v-for="leave in upcomingLeaves"

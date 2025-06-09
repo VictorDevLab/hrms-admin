@@ -116,10 +116,6 @@ const goBack = () => {
   }
 }
 
-
-onMounted(() => {
-  console.log('404 page mounted')
-})
 </script>
 
 <style scoped>
