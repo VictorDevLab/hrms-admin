@@ -13,8 +13,9 @@ export const useAuthStore = defineStore('auth', {
         async login(email, password) {
             try {
                 const response = await axios.post('http://localhost:3001/api/auth/login', {email, password});
-                this.token = response.data.token;
-                this.userId = response.data.useAuthStore
+                this.token = response.data.accessToken;
+                this.userId = response.data.user.user_Id;
+                console.log('UserId:', this.userId);
                 this.isAuthenticated = true;
                 router.push('/'); 
             } catch(error) {

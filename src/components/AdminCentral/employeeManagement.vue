@@ -1,52 +1,33 @@
 <template>
-  <v-container class="pa-6">
-    <v-row class="mb-4">
+  <v-container class="">
+    <v-row class="mb-4" v-if="!addNewEmp">
       <v-col cols="12" md="4" class="text-center mt-4">
-        <v-text-field
-          solo
-          density="compact"
-          variant="solo"
-          hide-details
-          class="rounded-xl"
-          prepend-inner-icon="mdi-magnify"
-          v-model="searchedName"
-          placeholder="Search Employee Name"
-          style="
+        <v-text-field solo density="compact" variant="solo" hide-details class="rounded-xl"
+          prepend-inner-icon="mdi-magnify" v-model="searchedName" placeholder="Search Employee Name" style="
             background: #ffffff;
             border: 0.5px solid #e9ecef;
             opacity: 1;
             border-radius: 8px;
-          "
-        ></v-text-field>
+          "></v-text-field>
       </v-col>
       <v-col cols="12" md="4">
         <v-row class="pa-0">
           <v-col cols="6">
             <div class="d-flex justify-center">
               <v-col cols="2" md="3" align-self="center">
-                <v-icon
-                  color="blue-accent-3"
-                  size="x-large"
-                  icon="mdi-face-man"
-                ></v-icon>
+                <v-icon color="blue-accent-3" size="x-large" icon="mdi-face-man"></v-icon>
               </v-col>
               <v-col cols="10" md="9">
                 <h2>60(88%)</h2>
                 <span>Male Employees</span>
               </v-col>
             </div>
-               <v-divider
-            vertical
-            ></v-divider>
+            <v-divider vertical></v-divider>
           </v-col>
           <v-col cols="6">
             <div class="d-flex">
               <v-col cols="2" md="3" align-self="center">
-                <v-icon
-                  color="pink-accent-3"
-                  size="x-large"
-                  icon="mdi-face-woman"
-                ></v-icon>
+                <v-icon color="pink-accent-3" size="x-large" icon="mdi-face-woman"></v-icon>
               </v-col>
               <v-col cols="10" md="9">
                 <h2>10(18%)</h2>
@@ -55,64 +36,39 @@
             </div>
           </v-col>
         </v-row>
-        </v-col>
-     <v-col cols="12" md="4" class="text-center">
-      <v-tooltip location="bottom">
-        <template #activator="{ props }">
-          <v-icon
-            v-bind="props"
-            color="blue-accent-4"
-            size="x-large"
-            icon="mdi-account-multiple-plus"
-            class="cursor-pointer mt-4 ml-0"
-          />
-        </template>
-        <span>Add New Employee</span>
-      </v-tooltip>
-    </v-col>
+      </v-col>
+      <v-col cols="12" md="4" class="text-center">
+        <v-tooltip location="bottom">
+          <template #activator="{ props }">
+            <v-icon v-bind="props" color="blue-accent-4" size="x-large" @click="addNewEmp = true"
+              icon="mdi-account-multiple-plus" class="cursor-pointer mt-4 ml-0" />
+          </template>
+          <span>Add New Employee</span>
+        </v-tooltip>
+      </v-col>
     </v-row>
-
+    <div v-if="addNewEmp">
+      <addNewEmployee />
+    </div>
     <!-- Employee List -->
-     <v-row>
-      <v-col
-        v-for="employee in employees"
-        :key="employee.id"
-        cols="12"
-        sm="6"
-        md="4"
-        lg="3"
-      >
-        <v-card
-          class="employee-card"
-          elevation="2"
-          :ripple="false"
-        >
+    <v-row v-else>
+      <v-row>
+        <v-col cols="12" sm="6" md="4" lg="3" v-for="i in 12" :key="i">
+          <v-skeleton-loader class="mx-auto border" max-width="365" style="border-radius: 8px;" type="card-avatar, actions"></v-skeleton-loader>
+        </v-col>
+      </v-row>
+      <v-col v-for="employee in employees" :key="employee.id" cols="12" sm="6" md="4" lg="3">
+        <v-card class="employee-card" elevation="2" :ripple="false">
           <!-- Badge -->
-          <v-chip
-            :color="employee.badgeColor"
-            class="employee-badge"
-            size="small"
-            variant="flat"
-          >
+          <v-chip :color="employee.badgeColor" class="employee-badge" size="small" variant="flat">
             {{ employee.badge }}
           </v-chip>
 
           <!-- Avatar -->
           <div class="avatar-container">
-            <v-avatar
-              size="80"
-              class="employee-avatar"
-            >
-              <v-img
-                v-if="employee.avatar"
-                :src="employee.avatar"
-                :alt="employee.name"
-              />
-              <v-icon
-                v-else
-                size="40"
-                color="primary"
-              >
+            <v-avatar size="80" class="employee-avatar">
+              <v-img v-if="employee.avatar" :src="employee.avatar" :alt="employee.name" />
+              <v-icon v-else size="40" color="primary">
                 mdi-account-circle
               </v-icon>
             </v-avatar>
@@ -138,8 +94,11 @@
 
 <script setup>
 import { ref } from "vue";
+import addNewEmployee from "@/components/reusable/addNew.vue";
+
 
 const searchedName = ref("");
+const addNewEmp = ref(false);
 const employees = ref([
   {
     id: 1,

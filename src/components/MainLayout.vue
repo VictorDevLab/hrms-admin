@@ -208,7 +208,7 @@ const logout = () => {
     setTimeout(() => {
         console.log("Logging out...")
         authStore.logout()
-    }, 2300) 
+    }, 1500) 
 }
 const isTokenExpired = () => {
  if (authStore.value === null) return true;

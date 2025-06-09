@@ -20,7 +20,7 @@
                 </v-card>
             </div>
         </v-row>
-        <div>
+        <div class="pa-0 ma-0">
             <AdminCentral v-if="selectedCard === '#admin-central'" />
             <EmployeeManagement v-if="selectedCard === '#employee-management'" />
             <EmployeeRequests v-if="selectedCard === '#employee-requests'" />
