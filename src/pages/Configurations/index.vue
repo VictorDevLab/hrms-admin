@@ -1,6 +1,6 @@
 <template>
-  <div class="admin-central pt-8" style="background-color: #f5f5f5; min-height: 100vh;">
-     <v-row class="mb-6 ml-2">
+<div>
+        <v-row class="mb-6 ml-2">
             <div cols="12" sm="6" md="3" class="mb-3" v-for="card in cards" :key="card.id"
                 style="min-width: 220px; max-width: 220px; max-height: 110px">
                 <v-card elevation="3" height="85" :style="
@@ -20,63 +20,38 @@
                 </v-card>
             </div>
         </v-row>
-        <div class="pa-0 ma-0">
-            <AdminCentral v-if="selectedCard === '#admin-central'" />
-            <EmployeeManagement v-if="selectedCard === '#employee-management'" />
-            <EmployeeRequests v-if="selectedCard === '#employee-requests'" />
-            <TeamCalendar v-if="selectedCard === '#team-calendar'" />
-        </div>
-  </div>
-  </template>
+</div>
+</template>
+<script setup>
+import { ref } from 'vue'
 
-  <script setup>
-  import { ref } from 'vue'
-  import AdminCentral from '@/components/AdminCentral/central.vue'
-  import EmployeeManagement from '@/components/AdminCentral/employeeManagement.vue'
-  
-  const selectedCard = ref('#admin-central');
 
   const cards = ref([
     {
-        title: 'Admin <br/> Central',
+        title: 'Company <br/> Set-up',
         id: '#admin-central',
         icon: 'mdi-briefcase',
         color: 'blue',
     },
     {
-        title: 'Employee <br/> Management',
+        title: 'Employee <br/> Data',
         id: '#employee-management',
         icon: 'mdi-account-group',
         color: 'green',
     },
     {
-        title: 'Employee <br/> Requests',
-        id: '#employee-requests',
-        icon: 'mdi-shield-account',
-        color: 'orange',
-    },
-    {
-        title: 'Team <br/> Calendar',
+        title: 'Requests <br/> Management',
         id: '#team-calendar',
         icon: 'mdi-chart-line',
         color: 'purple',
+    },
+    {
+        title: 'Assets',
+        id: '#employee-requests',
+        icon: 'mdi-shield-account',
+        color: 'orange',
     }
 ])
 
 
-const setSelectedCard = (cardId) => {
-    selectedCard.value = cardId;
-};
-  </script>
-
-  <style scoped>
-  
-.quick-action-card {
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-
-.quick-action-card:hover {
-    transform: translateY(-2px);
-}
-  </style>
+</script>

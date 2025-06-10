@@ -4,7 +4,7 @@
       <div class="fill-height">
         <div class="d-flex align-center pa-6 pt-10 pb-0">
           <div class="border-end pe-5">
-            <img loading="lazy" decoding="async" :src="loginSvg" class="logo-img" />
+            <img loading="lazy" decoding="async" :src="logoSvg" class="logo-img" />
           </div>
           <div class="ml-4">
             <p class="text-h6 font-weight-semibold gradient-text ma-0">
@@ -130,7 +130,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import keyhole from "@/assets/keyhole.svg"
-import loginSvg from "@/assets/loginSvg.svg"
+import logoSvg from "@/assets/logo-light.png"
 import bgimage from "@/assets/bg-image.png"
 
 const authStore = useAuthStore()
@@ -201,7 +201,7 @@ const login = async () => {
 
 @media (min-width: 1400px) {
   .logo-img {
-    height: auto;
+   height: 50px;
   }
   .login_wrapper {
     overflow: hidden;

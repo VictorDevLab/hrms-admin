@@ -192,7 +192,7 @@ const secondaryMenuItems = ref([
     {
         title: 'Settings',
         icon: 'mdi-cog',
-        route: '/settings'
+        route: '/configurations'
     },
     {
         title: 'Reports',

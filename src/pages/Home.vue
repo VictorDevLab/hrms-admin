@@ -17,8 +17,8 @@
             </v-col>
             <v-spacer></v-spacer>
             <v-col cols="3" class="text-center">
-                <v-btn flat color="error rounded-xl" class="text-white mt-4 mr-6" @click="$router.push('/clock-in')">
-                    clock in
+                <v-btn flat color="#FF8181" class="text-white mt-4 mr-6 rounded-xl" @click="$router.push('/clock-in')">
+                     <v-icon size="24">mdi-timer</v-icon>clock in
                 </v-btn>
             </v-col>
         </v-row>
