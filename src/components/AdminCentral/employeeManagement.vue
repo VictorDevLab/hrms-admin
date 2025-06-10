@@ -1,5 +1,5 @@
 <template>
-  <v-container class="">
+  <div class="ma-0">
     <v-row class="mb-4" v-if="!addNewEmp">
       <v-col cols="12" md="4" class="text-center mt-4">
         <v-text-field solo density="compact" variant="solo" hide-details class="rounded-xl"
@@ -37,37 +37,35 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="12" md="4" class="text-center">
+      <v-col cols="12" md="2" class="text-center">
         <v-tooltip location="bottom">
           <template #activator="{ props }">
-            <v-icon v-bind="props" color="blue-accent-4" size="x-large" @click="addNewEmp = true"
-              icon="mdi-account-multiple-plus" class="cursor-pointer mt-4 ml-0" />
+            <v-icon v-bind="props" color="blue-accent-4" size="40" @click="addNewEmp = true"
+              icon="mdi-plus-box" class="cursor-pointer mt-4 ml-0" />
           </template>
           <span>Add New Employee</span>
         </v-tooltip>
       </v-col>
     </v-row>
     <div v-if="addNewEmp">
-      <addNewEmployee />
+      <addNewEmployee @employeeAdded="employeeAdded" @closeEmpForm="closeEmpForm"/>
     </div>
     <!-- Employee List -->
     <v-row v-else>
-      <v-row>
-        <v-col cols="12" sm="6" md="4" lg="3" v-for="i in 12" :key="i">
+        <v-col v-if="loadingEmployees" cols="12" sm="6" md="4" lg="3" v-for="i in 12" :key="i">
           <v-skeleton-loader class="mx-auto border" max-width="365" style="border-radius: 8px;" type="card-avatar, actions"></v-skeleton-loader>
         </v-col>
-      </v-row>
-      <v-col v-for="employee in employees" :key="employee.id" cols="12" sm="6" md="4" lg="3">
+      <v-col v-else v-for="employee in employees" :key="employee.id" cols="12" sm="6" md="4" lg="3">
         <v-card class="employee-card" elevation="2" :ripple="false">
           <!-- Badge -->
-          <v-chip :color="employee.badgeColor" class="employee-badge" size="small" variant="flat">
-            {{ employee.badge }}
+          <v-chip color="teal" class="employee-badge" size="small" variant="flat">
+            {{ employee.employment?.employeeId }}
           </v-chip>
 
           <!-- Avatar -->
           <div class="avatar-container">
             <v-avatar size="80" class="employee-avatar">
-              <v-img v-if="employee.avatar" :src="employee.avatar" :alt="employee.name" />
+              <v-img v-if="employee.personal?.image" :src="employee.personal?.image" :alt="employee.personal?.firstName + employee.personal?.lastName" />
               <v-icon v-else size="40" color="primary">
                 mdi-account-circle
               </v-icon>
@@ -77,150 +75,60 @@
           <!-- Employee Details -->
           <v-card-text class="text-center pa-3">
             <h3 class="employee-name text-h6 font-weight-bold mb-2">
-              {{ employee.name }}
+              {{ employee.personal?.firstName }} {{ employee.personal?.lastName }}
             </h3>
             <p class="employee-title text-body-2 mb-1">
-              {{ employee.title }}
+              {{ employee.employment?.title }}
             </p>
             <p class="employee-department text-caption text-medium-emphasis">
-              {{ employee.department }} - {{ employee.subDepartment }}
+              {{ employee.employment?.department }} - dynamic
             </p>
           </v-card-text>
         </v-card>
       </v-col>
+        <v-col><h3 v-if="employees.length <=0">No employees Found!</h3></v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import { useAuthStore } from "@/stores/auth";
 import addNewEmployee from "@/components/reusable/addNew.vue";
 
-
+const authStore = useAuthStore();
+const employees = ref([]);
 const searchedName = ref("");
 const addNewEmp = ref(false);
-const employees = ref([
-  {
-    id: 1,
-    name: 'Adetomiwa Teluwo',
-    title: 'Global Expansion Specialist',
-    department: 'Administration',
-    subDepartment: 'Administration',
-    badge: 'UK-USA',
-    badgeColor: 'teal',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face'
-  },
-  {
-    id: 2,
-    name: 'Alesia Lebiadzevich',
-    title: 'Assistant Operations Manager',
-    department: 'Administration',
-    subDepartment: 'Administration',
-    badge: 'MAL-DD',
-    badgeColor: 'teal',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face'
-  },
-  {
-    id: 3,
-    name: 'Ali Haidar Haidar',
-    title: 'AWS Support',
-    department: 'Executive Office',
-    subDepartment: 'Executive Office',
-    badge: 'DXB-DOS',
-    badgeColor: 'teal',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
-  },
-  {
-    id: 4,
-    name: 'Amarjit Singh',
-    title: 'AWS Support',
-    department: 'Tech',
-    subDepartment: 'Tech',
-    badge: 'CON-IND',
-    badgeColor: 'teal',
-    avatar: null // Will show default icon
-  },
-  {
-    id: 5,
-    name: 'Ana Jane Crema',
-    title: 'Personal Assistant to Co-',
-    department: 'Management',
-    subDepartment: 'Management',
-    badge: 'NDV-005',
-    badgeColor: 'teal',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face'
-  },
-  {
-    id: 6,
-    name: 'Ana Lou Salvador',
-    title: 'Operations Analyst',
-    department: 'Operations',
-    subDepartment: 'Operations',
-    badge: 'TT-2',
-    badgeColor: 'teal',
-    avatar: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face'
-  },
-  {
-    id: 7,
-    name: 'Anjelica Villarin',
-    title: 'Operations Support Specialist',
-    department: 'Operations',
-    subDepartment: 'Operations',
-    badge: 'PHL-015',
-    badgeColor: 'teal',
-    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face'
-  },
-  {
-    id: 8,
-    name: 'Antalia Antalia',
-    title: 'AWS Support',
-    department: 'Administration',
-    subDepartment: 'Administration',
-    badge: 'MM-1',
-    badgeColor: 'teal',
-    avatar: null // Will show default icon
-  },
-  {
-    id: 9,
-    name: 'Ayman Qasim',
-    title: 'Legal Advisor',
-    department: 'Legal',
-    subDepartment: 'Legal',
-    badge: 'DXB-032',
-    badgeColor: 'teal',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
-  },
-  {
-    id: 10,
-    name: 'Bhavik Mehta',
-    title: 'Senior Software Engineer',
-    department: 'Tech',
-    subDepartment: 'Tech',
-    badge: 'DXB-046',
-    badgeColor: 'teal',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face'
-  },
-  {
-    id: 11,
-    name: 'Bhavika Fudani',
-    title: 'Business Analyst',
-    department: 'Product',
-    subDepartment: 'Product',
-    badge: 'DXB-068',
-    badgeColor: 'teal',
-    avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=150&h=150&fit=crop&crop=face'
-  },
-  {
-    id: 12,
-    name: 'Chandramohan Red...',
-    title: 'Integration Support Executive',
-    department: 'Tech',
-    subDepartment: 'Tech',
-    badge: 'VSI-004',
-    badgeColor: 'teal',
-    avatar: null // Will show default icon
+const loadingEmployees = ref(false);
+
+const getAllEmployees = async () => {
+     loadingEmployees.value = true;
+     const token = authStore.token
+     const AuthStr = 'Bearer '.concat(token)
+  try {
+      const response = await axios.get('http://localhost:3001/api/users/getAll', { headers: { Authorization: AuthStr }});
+      employees.value = response.data; 
+  } catch (error) {
+    console.error("Error fetching employees:", error);
+  } finally {
+    loadingEmployees.value = false;
   }
-])
+}
+
+const employeeAdded = () => {
+   addNewEmp.value = false;
+   getAllEmployees();
+};
+const closeEmpForm = () => {
+   addNewEmp.value = false;
+};
+
+//async mounted
+onMounted(async () => {
+  await getAllEmployees();
+});
 </script>
 
 <style scoped>

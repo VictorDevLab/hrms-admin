@@ -38,7 +38,11 @@ const routes = [
 //     name: 'Profile',
 //     component: () => import('../pages/Profile.vue')
 //   },
-
+ {
+    path: '/configurations',
+    name: 'Settings',
+    component: () => import('../pages/Configurations/index.vue')
+  },
   {
     path: '/:catchAll(.*)',
     name: 'NotFound',
