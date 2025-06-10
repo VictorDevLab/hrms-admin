@@ -2,43 +2,45 @@
   <div>
     <div class="login_wrapper">
       <div class="fill-height">
-        <div class="d-flex align-center pa-6 pt-10 pb-0">
+        <div class="d-flex align-center pa-6 pt-8 pb-0">
           <div class="border-end pe-5">
             <img loading="lazy" decoding="async" :src="logoSvg" class="logo-img" />
           </div>
           <div class="ml-4">
             <p class="text-h6 font-weight-semibold gradient-text ma-0">
-              ALPHA CENTRAL
+              ALPHA  CO. LTD
             </p>
           </div>
         </div>
 
         <v-container fluid class="fill-height px-16 pb-16">
           <v-row class="fill-height justify-center align-center" no-gutters>
-            <v-col cols="12" lg="6" class="d-none d-xl-flex">
-              <div class="text-center pt-16">
+            <v-col cols="12" lg="6" class="d-none d-lg-flex">
+              <div class="text-center preview-section">
                 <div class="preview-container">
                   <img 
                     loading="lazy" 
                     decoding="async" 
                     src="@/assets/preview.png" 
                     alt="app preview"
-                    class="preview-img d-none d-lg-block mx-auto"
+                    class="preview-img mx-auto"
                   />
                   <div class="mt-8">
-                    <h2 class="text-h4 text-white font-weight-regular mb-4 d-none d-lg-block">
+                    <h2 class="text-h4 text-white font-weight-regular mb-4">
                       Simple yet powerful HRMS for businesses 
                     </h2>
-                    <p class="text-subtitle-1 text-grey-lighten-1 d-none d-lg-block">
-                      Track expenses, customize invoices, run reports and even more all from one place
+                    <p class="text-grey-lighten-1">
+                      Manage your employees, requests, payroll, assets and much more with ease. 
+                      <br />
+                      <span class="font-weight-bold">Get started today!</span>
                     </p>
                   </div>
                 </div>
               </div>
             </v-col>
 
-            <v-col cols="12" lg="6" xl="5">
-              <v-card class="login-card mx-auto" elevation="8" rounded="lg">
+            <v-col cols="12" lg="6" xl="5" class="form-column">
+              <v-card class="login-card mx-auto" elevation="8" rounded="lg" style="max-height: 690px;">
                 <div class="card-header position-relative">
                   <img 
                     loading="lazy" 
@@ -63,12 +65,12 @@
                       </div>
                       
                       <div class="login-content px-4">
-                        <div class="pt-6 pt-xl-14 mb-4">
-                          <!-- Login title if needed -->
+                        <div class="pt-6 pt-xl-14 mb-6">
+                         
                         </div>
 
-                        <v-form v-if="environment == 'development'" @submit.prevent="login">
-                          <div class="mb-6">
+                        <v-form @submit.prevent="login">
+                          <div class="mb-3">
                             <v-text-field
                               v-model="email"
                               label="Email Address"
@@ -97,7 +99,7 @@
                               size="large"
                               block
                               :loading="isSubmitting"
-                              class="mt-6"
+                              class="mt-4"
                             >
                               Login
                             </v-btn>
@@ -193,12 +195,19 @@ const login = async () => {
 .login_wrapper {
   background: url("@/assets/nathan-bg.svg") !important;
   overflow: hidden auto;
+  min-height: 100vh;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.fill-height {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .logo-img {
   height: 40px;
 }
-
 @media (min-width: 1400px) {
   .logo-img {
    height: 50px;
@@ -207,14 +216,48 @@ const login = async () => {
     overflow: hidden;
   }
 }
-
 .gradient-text {
   background: linear-gradient(to right, #44A16A, #3582B3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+.v-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.v-row {
+  margin: 0;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.preview-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+}
 
+.preview-container {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-img {
+  max-width: 85%;
+  height: auto;
+}
+.form-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
 .login-card {
   width: 100%;
   max-width: 460px;
@@ -225,77 +268,80 @@ const login = async () => {
     max-width: 650px;
   }
 }
-
+@media (max-width: 1023px) {
+  .form-column {
+    padding: 1rem;
+  }
+  
+  .login-card {
+    max-width: 500px;
+  }
+}
+@media (max-width: 767px) {
+  .login_wrapper {
+    padding: 0;
+  }
+  
+  .v-container {
+    padding: 1rem !important;
+  }
+  
+  .form-column {
+    padding: 0.5rem;
+  }
+  
+  .login-card {
+    max-width: 100%;
+    margin: 0 0.5rem;
+  }
+}
 .card-header {
   height: 280px;
   overflow: hidden;
   border-radius: 8px 8px 0 0;
 }
-
 .header-bg {
   width: 100%;
   height: 100%;
   object-fit: cover;
   background-color: #40485F;
 }
-
-.preview-container {
-  height: 600px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.preview-img {
-  max-width: 83%;
-}
-
 .login-content {
   min-height: 320px;
 }
-
 @media (min-width: 1200px) {
   .login-content {
     min-height: 350px;
   }
 }
-
 .outlook-btn {
   border-color: #3B82F6 !important;
 }
-
 .outlook-icon {
   height: 40px;
 }
-
 .curve {
   position: absolute;
   top: -8px;
   left: 18px;
   z-index: 1;
 }
-
 .keyhole-icon {
   position: absolute;
   top: -22px;
   left: 2px;
   z-index: 50;
 }
-
 .keyhole-avatar {
   background-color: #1A70D4 !important;
 }
-
 .keyhole-img {
   width: 24px;
   height: 24px;
 }
-
 .curve-parent {
   position: relative;
 }
-
 .curve::before {
   position: absolute;
   top: -27px;
@@ -309,8 +355,6 @@ const login = async () => {
   z-index: 0;
   background: #fff;
 }
-
-/* Hide body overflow */
 :deep(body) {
   overflow: hidden;
 }
