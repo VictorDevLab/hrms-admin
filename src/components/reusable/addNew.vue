@@ -13,18 +13,18 @@
                         icon="mdi-briefcase"></v-stepper-item>
 
                     <v-divider></v-divider>
-                    <v-stepper-item :complete="step > 3" :value="3" title="Leaves"
+                    <v-stepper-item :complete="step > 3" :value="3" title="Hr & Leaves"
                         icon="mdi-briefcase"></v-stepper-item>
 
                     <v-divider></v-divider>
 
                     <v-stepper-item :complete="step > 4" :value="4" title="Compensation"
                         icon="mdi-currency-usd"></v-stepper-item>
-                        <div class="mr-5 mb-8">
-                            <v-btn variant="outlined" size="small" color="red" @click="$emit('closeEmpForm')">
-                                close
-                            </v-btn>
-                        </div>
+                    <div class="mr-5 mb-8">
+                        <v-btn variant="outlined" size="small" color="red" @click="$emit('closeEmpForm')">
+                            close
+                        </v-btn>
+                    </div>
                 </div>
                 <v-divider></v-divider>
 
@@ -55,8 +55,9 @@
                                         prepend-inner-icon="mdi-home" variant="underlined"></v-text-field>
                                 </v-col>
                                 <v-col cols="4" class="d-flex align-center">
-                                    <v-btn color="green" class="mt-3" @click="openUploadModal" :loading="uploading"
-                                        variant="outlined"><v-icon left>mdi-cloud-upload</v-icon> Upload Image</v-btn>
+                                    <v-btn color="green" class="mt-2" size="small" @click="openUploadModal"
+                                        :loading="uploading" variant="outlined"><v-icon left>mdi-cloud-upload</v-icon>
+                                        Upload Profile Image</v-btn>
                                 </v-col>
                                 <v-col cols="3">
                                     <v-text-field v-model="employee.personal.image" label="Image" prepend-inner-icon=""
@@ -284,7 +285,7 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="grey" text @click="dialog = false">
+                            <v-btn color="grey" text @click="imageUploadDialog = false">
                                 Cancel
                             </v-btn>
                             <v-btn color="primary" :loading="uploading" @click="uploadImage">
@@ -327,6 +328,10 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" style="margin-right: 40px;" :timeout="snackbar.timeout" location="bottom-left">
+            {{ snackbar.text }}
+        </v-snackbar>
     </v-container>
 </template>
 
@@ -352,6 +357,21 @@ const step = ref(1)
 const showPassword = ref(false)
 const showSuccessDialog = ref(false)
 const showFailDialog = ref(false)
+
+const snackbar = ref({
+  show: false,
+  text: '',
+  color: 'error',
+  timeout: 5000
+})
+const showSnackbar = (text, color = 'error') => {
+  snackbar.value = {
+    show: true,
+    text,
+    color,
+    timeout: 5000
+  }
+}
 
 const employee = ref({
     email: "",
@@ -481,6 +501,7 @@ const uploadImage = async () => {
     );
     employee.value.personal.image = response.data.secure_url;
     imageUploadDialog.value = false;
+    showSnackbar('Image uploaded successfully!', 'teal')
     localImage.value = '';
   } catch (error) {
     console.error('Upload failed:', error);

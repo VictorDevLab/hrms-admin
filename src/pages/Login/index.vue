@@ -40,7 +40,7 @@
             </v-col>
 
             <v-col cols="12" lg="6" xl="5" class="form-column">
-              <v-card class="login-card mx-auto" elevation="8" rounded="lg" style="max-height: 690px;">
+              <v-card class="login-card mx-auto" elevation="8" rounded="lg">
                 <div class="card-header position-relative">
                   <img 
                     loading="lazy" 
