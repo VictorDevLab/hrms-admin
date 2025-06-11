@@ -1,5 +1,5 @@
 <template>
-  <div class="ma-0">
+  <div class="ma-0" v-if="!selectedEmployee">
     <v-row class="mb-4" v-if="!addNewEmp">
       <v-col cols="12" md="4" class="text-center mt-4">
         <v-text-field solo density="compact" variant="solo" hide-details class="rounded-xl"
@@ -48,7 +48,7 @@
       </v-col>
     </v-row>
     <div v-if="addNewEmp">
-      <addNewEmployee @employeeAdded="employeeAdded" @closeEmpForm="closeEmpForm"/>
+      <AddNewEmployee @employeeAdded="employeeAdded" @closeEmpForm="closeEmpForm"/>
     </div>
     <!-- Employee List -->
     <v-row v-else>
@@ -56,7 +56,7 @@
           <v-skeleton-loader class="mx-auto border" max-width="365" style="border-radius: 8px;" type="card-avatar, actions"></v-skeleton-loader>
         </v-col>
       <v-col v-else v-for="employee in employees" :key="employee.id" cols="12" sm="6" md="4" lg="3">
-        <v-card class="employee-card" elevation="2" :ripple="false">
+        <v-card class="employee-card" elevation="2" :ripple="false"  @click="selectEmployee(employee)">
           <!-- Badge -->
           <v-chip color="teal" class="employee-badge" size="small" variant="flat">
             {{ employee.employment?.employeeId }}
@@ -89,19 +89,25 @@
         <v-col><h3 v-if="employees.length <=0">No employees Found!</h3></v-col>
     </v-row>
   </div>
+  <div v-else>
+    <Employment :employee="selectedEmployee" :users="employees" @closeEmpForm="selectedEmployee = null"/>
+  </div>
+
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
-import addNewEmployee from "@/components/reusable/addNew.vue";
+import AddNewEmployee from "@/components/reusable/addNew.vue";
+import Employment from "@/components/AdminCentral/employment.vue"
 
 const authStore = useAuthStore();
 const employees = ref([]);
 const searchedName = ref("");
 const addNewEmp = ref(false);
 const loadingEmployees = ref(false);
+const selectedEmployee = ref(null);
 
 const getAllEmployees = async () => {
      loadingEmployees.value = true;
@@ -123,6 +129,10 @@ const employeeAdded = () => {
 };
 const closeEmpForm = () => {
    addNewEmp.value = false;
+};
+const selectEmployee = (employee) => {
+  selectedEmployee.value = employee;
+  console.log("Selected Employee:", selectedEmployee.value);
 };
 
 //async mounted
