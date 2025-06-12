@@ -3,7 +3,8 @@
     <v-row class="mb-4" v-if="!addNewEmp">
       <v-col cols="12" md="4" class="text-center mt-4">
         <v-text-field solo density="compact" variant="solo" hide-details class="rounded-xl"
-          prepend-inner-icon="mdi-magnify" v-model="searchedName" placeholder="Search Employee Name" style="
+            v-model = "searchQuery"
+            prepend-inner-icon="mdi-magnify" placeholder="Search Employee Name" style="
             background: #ffffff;
             border: 0.5px solid #e9ecef;
             opacity: 1;
@@ -55,7 +56,7 @@
         <v-col v-if="loadingEmployees" cols="12" sm="6" md="4" lg="3" v-for="i in 12" :key="i">
           <v-skeleton-loader class="mx-auto border" max-width="365" style="border-radius: 8px;" type="card-avatar, actions"></v-skeleton-loader>
         </v-col>
-      <v-col v-else v-for="employee in employees" :key="employee.id" cols="12" sm="6" md="4" lg="3">
+      <v-col v-else v-for="employee in filteredEmployees" :key="employee.id" cols="12" sm="6" md="4" lg="3">
         <v-card class="employee-card" elevation="2" :ripple="false"  @click="selectEmployee(employee)">
           <!-- Badge -->
           <v-chip color="teal" class="employee-badge" size="small" variant="flat">
@@ -96,7 +97,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import AddNewEmployee from "@/components/reusable/addNew.vue";
@@ -104,7 +105,7 @@ import Employment from "@/components/AdminCentral/employment.vue"
 
 const authStore = useAuthStore();
 const employees = ref([]);
-const searchedName = ref("");
+const searchQuery = ref("");
 const addNewEmp = ref(false);
 const loadingEmployees = ref(false);
 const selectedEmployee = ref(null);
@@ -139,6 +140,19 @@ const selectEmployee = (employee) => {
 onMounted(async () => {
   await getAllEmployees();
 });
+
+//computed
+const filteredEmployees = computed(() => {
+  if(!employees.value) return []
+  if(!searchQuery.value) return employees.value
+
+  return employees?.value.filter((user) => {
+    const fullName = `${user.personal?.firstName || ''} ${user.personal?.lastName || ''}`.toLowerCase()
+    const query = searchQuery.value.toLowerCase()
+
+    return fullName.includes(query)
+  })
+})
 </script>
 
 <style scoped>

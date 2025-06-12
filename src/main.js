@@ -8,9 +8,13 @@ import {createPinia} from 'pinia'
 import { mdi } from 'vuetify/iconsets/mdi'
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
+import { VCalendar } from 'vuetify/labs/VCalendar'
 
 const vuetify = createVuetify({
-  components,
+components : {
+  ...components,
+  VCalendar
+},
   directives,
   icons: {
     defaultSet: 'mdi',

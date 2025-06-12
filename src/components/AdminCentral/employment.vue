@@ -22,21 +22,21 @@
           <v-list-item
             v-for="user in filteredUsers"
             :key="user.id"
-            :active="selectedEmployeeId === user.id"
+            :active="selectedEmployeeId === user._id"
             @click="selectEmployee(user)"
-            class="mb-1"
+            class="mb-1 py-3"
           >
             <template v-slot:prepend>
-              <v-avatar size="40" class="mr-3">
+              <v-avatar size="50" class="mr-3">
                 <v-img v-if="user.personal?.image" :src="user.personal.image" />
                 <v-icon v-else color="primary">mdi-account-circle</v-icon>
               </v-avatar>
             </template>
             
-            <v-list-item-title class="font-weight-medium">
+            <v-list-item-title class="font-weight-medium d-flex flex-wrap">
               {{ user.personal?.firstName }} {{ user.personal?.lastName }}
             </v-list-item-title>
-            <v-list-item-subtitle>
+            <v-list-item-subtitle class="d-flex flex-wrap">
               {{ user.employment?.title || 'No Title' }}
             </v-list-item-subtitle>
             
@@ -102,7 +102,7 @@
           </div>
         </v-card-title>
 
-        <v-tabs v-model="activeTab" class="border-b">
+        <v-tabs v-model="activeTab" grow color="blue-accent-4" class="border-b">
           <v-tab value="personal">
             <v-icon left>mdi-account</v-icon>
             Personal
@@ -549,15 +549,49 @@
         </v-card-text>
       </v-card>
     </v-col>
+
+      <v-dialog v-model="showSuccessDialog" max-width="500">
+            <v-card>
+                <v-card-title class="text-h5 text-center">
+                    <v-icon color="success" size="large" class="mr-2">mdi-check-circle</v-icon>
+                    Success!
+                </v-card-title>
+                <v-card-text class="text-center">
+                    Employee Updated successfully!
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" @click="showSuccessDialog = false">OK</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="showFailDialog" max-width="500">
+            <v-card>
+                <v-card-title class="text-h5 text-center">
+                    <v-icon color="red" size="large" class="mr-2">mdi-close-circle-outline</v-icon>
+                    Failed!
+                </v-card-title>
+                <v-card-text class="text-center">
+                    Employee Update Failed!
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" @click="showFailDialog = false">OK</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
   </v-row>
 </template>
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import axios from 'axios'
 
 const props = defineProps(['employee', 'users'])
 const emit = defineEmits(['closeEmpForm', 'employeeUpdated'])
 
+const authStore = useAuthStore()
 // Reactive data
 const activeTab = ref('personal')
 const editMode = ref(false)
@@ -567,6 +601,8 @@ const selectedEmployeeId = ref(null)
 const currentEmployee = ref({})
 const editableEmployee = ref({})
 
+const showFailDialog = ref(false)
+const showSuccessDialog = ref(false)
 // Initialize data structure
 const initializeEmployee = (employee) => {
   return {
@@ -642,7 +678,7 @@ const filteredUsers = computed(() => {
 
 // Methods
 const selectEmployee = (employee) => {
-  selectedEmployeeId.value = employee.id
+  selectedEmployeeId.value = employee._id
   currentEmployee.value = initializeEmployee(employee)
   editableEmployee.value = JSON.parse(JSON.stringify(currentEmployee.value))
   editMode.value = false
@@ -651,7 +687,7 @@ const selectEmployee = (employee) => {
 
 const toggleEditMode = () => {
   if (editMode.value) {
-    // Cancel editing - reset changes
+    // Cancel editing, reset changes
     editableEmployee.value = JSON.parse(JSON.stringify(currentEmployee.value))
   }
   editMode.value = !editMode.value
@@ -659,23 +695,20 @@ const toggleEditMode = () => {
 
 const saveChanges = async () => {
   saving.value = true
-  
+  const token = authStore.token
+  const AuthStr = 'Bearer '.concat(token)
+
+  const payload = editableEmployee.value
   try {
-    // Here you would make your API call to save changes
-    // await updateEmployee(editableEmployee.value)
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    // Update current employee with saved changes
+    const response = await axios.put(`http://localhost:3001/api/users/updateUser/${selectedEmployeeId.value}`, payload, { headers: { Authorization: AuthStr } })
+    if (response.status === 200) {
+        showSuccessDialog.value = true
+      }
     currentEmployee.value = JSON.parse(JSON.stringify(editableEmployee.value))
     editMode.value = false
-    
-    // Emit event to parent to refresh data
     emit('employeeUpdated', editableEmployee.value)
-    
-    console.log('Employee updated successfully:', editableEmployee.value)
   } catch (error) {
+      showFailDialog.value = true
     console.error('Error updating employee:', error)
   } finally {
     saving.value = false
