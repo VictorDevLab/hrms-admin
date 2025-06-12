@@ -36,58 +36,58 @@
                             <v-row>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.personal.firstName" label="First Name"
-                                        prepend-inner-icon="mdi-account" variant="underlined" required></v-text-field>
+                                        prepend-inner-icon="mdi-account" variant="outlined" density="comfortable" required></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.personal.lastName" label="Last Name"
-                                        variant="underlined" required></v-text-field>
+                                        variant="outlined" density="comfortable" required></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.personal.phone" label="Phone Number"
-                                        prepend-inner-icon="mdi-phone" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-phone" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <!-- <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.personal.personalEmail" label="Personal Email"
-                                        type="email" prepend-inner-icon="mdi-email-outline"  variant="underlined"></v-text-field>
+                                        type="email" prepend-inner-icon="mdi-email-outline"  variant="outlined" density="comfortable"></v-text-field>
                                 </v-col> -->
                                 <v-col cols="4">
                                     <v-text-field v-model="employee.personal.address" label="Address"
-                                        prepend-inner-icon="mdi-home" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-home" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="4" class="d-flex align-center">
                                     <v-btn color="green" class="mt-2" size="small" @click="openUploadModal"
                                         :loading="uploading" variant="outlined"><v-icon left>mdi-cloud-upload</v-icon>
                                         Upload Profile Image</v-btn>
                                 </v-col>
-                                <v-col cols="3">
+                                <v-col cols="4">
                                     <v-text-field v-model="employee.personal.image" label="Image" prepend-inner-icon=""
-                                        disabled variant="underlined"></v-text-field>
+                                        disabled variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.personal.state" label="State"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.personal.city" label="City"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.personal.zipCode" label="Zip Code"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.personal.dateOfBirth" label="Date of Birth"
                                         type="date" prepend-inner-icon="mdi-calendar"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-select v-model="employee.personal.gender" label="Gender" :items="genderOptions"
-                                        prepend-inner-icon="mdi-human-male-female" variant="underlined"></v-select>
+                                        prepend-inner-icon="mdi-human-male-female" variant="outlined" density="comfortable"></v-select>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-select v-model="employee.personal.maritalStatus" label="Marital Status"
                                         :items="maritalStatusOptions" prepend-inner-icon="mdi-heart"
-                                        variant="underlined"></v-select>
+                                        variant="outlined" density="comfortable"></v-select>
                                 </v-col>
                             </v-row>
                         </v-card-text>
@@ -100,57 +100,57 @@
                                 <v-col cols="12" md="4">
                                     <v-select v-model="employee.employment.department" label="Department"
                                         :items="departmentOptions" prepend-inner-icon="mdi-domain"
-                                        variant="underlined"></v-select>
+                                        variant="outlined" density="comfortable"></v-select>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.employment.title" label="Job Title"
-                                        prepend-inner-icon="mdi-briefcase" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-briefcase" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-select v-model="employee.employment.employeeType" label="Employee Type"
-                                        :items="employeeTypeOptions" variant="underlined"></v-select>
+                                        :items="employeeTypeOptions" variant="outlined" density="comfortable"></v-select>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.employment.roleId" label="Role ID"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.email" label="Email Address" type="email"
-                                        prepend-inner-icon="mdi-email" variant="underlined" :rules="emailRules"
+                                        prepend-inner-icon="mdi-email" variant="outlined" density="comfortable" :rules="emailRules"
                                         required></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.password" label="Password"
                                         :type="showPassword ? 'text' : 'password'"
                                         :prepend-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                        @click:prepend="showPassword = !showPassword" variant="underlined"
+                                        @click:prepend="showPassword = !showPassword" variant="outlined" density="comfortable"
                                         :rules="passwordRules" required></v-text-field>
                                 </v-col>
                                 <!-- <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.employment.employeeId" label="Employee ID"
-                                        prepend-inner-icon="mdi-badge-account" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-badge-account" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col> -->
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.employment.manager" label="Manager"
-                                        prepend-inner-icon="mdi-account-supervisor" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-account-supervisor" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.employment.dateOfJoining" label="Date of Joining"
                                         type="date" prepend-inner-icon="mdi-calendar-plus"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.employment.startDate" label="Start Date" type="date"
-                                        prepend-inner-icon="mdi-calendar-start" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-calendar-start" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.employment.endDate" label="End Date" type="date"
-                                        prepend-inner-icon="mdi-calendar-end" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-calendar-end" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <!-- <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.employment.probationEndDate"
                                         label="Probation End Date" type="date" prepend-inner-icon="mdi-calendar-clock"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col> -->
                             </v-row>
                         </v-card-text>
@@ -162,36 +162,36 @@
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.leaves.annualLeaves" label="Annual Leaves"
                                         type="number" prepend-inner-icon="mdi-calendar-star"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.leaves.sickLeaves" label="Sick Leaves" type="number"
-                                        prepend-inner-icon="mdi-calendar-heart" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-calendar-heart" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.leaves.maternityLeaves" label="Maternity Leaves"
                                         type="number" prepend-inner-icon="mdi-baby-bottle"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.leaves.paternityLeaves" label="Paternity Leaves"
                                         type="number" prepend-inner-icon="mdi-baby-face"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.leaves.emergencyLeaves" label="Emergency Leaves"
                                         type="number" prepend-inner-icon="mdi-alert-circle"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.leaves.compassionateLeaves"
                                         label="Compassionate Leaves" type="number"
-                                        prepend-inner-icon="mdi-heart-multiple" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-heart-multiple" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.leaves.studyLeaves" label="Study Leaves"
                                         type="number" prepend-inner-icon="mdi-school-outline"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                             </v-row>
                         </v-card-text>
@@ -205,31 +205,31 @@
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.compensation.basicSalary" label="Basic Salary"
                                         type="number" prepend-inner-icon="mdi-currency-usd"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-select v-model="employee.compensation.currency" label="Currency"
                                         :items="currencyOptions" prepend-inner-icon="mdi-cash"
-                                        variant="underlined"></v-select>
+                                        variant="outlined" density="comfortable"></v-select>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-select v-model="employee.compensation.payFrequency" label="Pay Frequency"
                                         :items="payFrequencyOptions" prepend-inner-icon="mdi-calendar-clock"
-                                        variant="underlined"></v-select>
+                                        variant="outlined" density="comfortable"></v-select>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.compensation.bonus" label="Bonus" type="number"
-                                        prepend-inner-icon="mdi-gift" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-gift" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.compensation.housingAllowance"
                                         label="Housing Allowance" type="number" prepend-inner-icon="mdi-home-city"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.compensation.commission" label="Commission"
                                         type="number" prepend-inner-icon="mdi-percent"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -239,16 +239,16 @@
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.compensation.bankName" label="Bank Name"
                                         prepend-inner-icon="mdi-briefcase" icon-color="green-darken-1"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.compensation.bankAddress" label="Bank Address"
-                                        prepend-inner-icon="mdi-briefcase" variant="underlined"></v-text-field>
+                                        prepend-inner-icon="mdi-briefcase" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.compensation.accountNumber" label="Account Number"
                                         type="number" prepend-inner-icon="mdi-percent"
-                                        variant="underlined"></v-text-field>
+                                        variant="outlined" density="comfortable"></v-text-field>
                                 </v-col>
                             </v-row>
                         </v-card-text>
@@ -443,18 +443,15 @@ const currencyOptions = ['USD', 'EUR', 'GBP', 'KES', 'NGN', 'ZAR']
 const payFrequencyOptions = ['Weekly', 'Bi-weekly', 'Monthly', 'Quarterly', 'Annually']
 
 const submitForm = async () => {
-    //attach token to the request
-       const token = authStore.token
-       const AuthStr = 'Bearer '.concat(token)
+    const token = authStore.token
+    const AuthStr = 'Bearer '.concat(token)
     //TODO: Add form validation 
     
     const payload = employee.value
     try {
         const response = await axios.post('http://localhost:3001/api/users/createNew', payload, { headers: { Authorization: AuthStr }})
         if(response.status == 201) {
-           setTimeout(() => {
             showSuccessDialog.value = true
-              }, 3000)
         }
         emit('employeeAdded', response.data) 
     } catch (error) {

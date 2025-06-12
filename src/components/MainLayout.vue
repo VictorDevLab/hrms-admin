@@ -12,17 +12,18 @@
             <v-list-item class="">
                 <template v-slot:prepend>
                     <v-badge bordered bottom color="green-accent-4" dot offset-x="1" offset-y="2" class="ml-4">
-                        <v-avatar size="40" style="border: 1.5px solid #258bff">
-                            <v-img src="https://randomuser.me/api/portraits/men/85.jpg" alt="User Avatar"></v-img>
+                        <v-avatar size="50" style="border: 1.5px solid #258bff">
+                            <v-img :src="user.personal?.image" :alt="user.personal?.firstName"></v-img>
                         </v-avatar>
                     </v-badge>
                 </template>
 
-                <v-list-item-title v-show="!rail" class="font-weight-bold text-md-h6 mr-2">
-                    Victor K Dev
+                <v-list-item-title v-show="!rail" class="font-weight-bold text-md-h6 mt-6 mr-2">
+                   {{user.personal?.firstName}} <br />
+                   {{user.personal?.lastName}}
                 </v-list-item-title>
                 <v-list-item-subtitle v-show="!rail" class="text-grey-darken-4 mr-2">
-                    Senior Developer
+                  {{user.employment?.title}}
                 </v-list-item-subtitle>
 
                 <template v-slot:append>
@@ -125,7 +126,7 @@
                 <template v-slot:activator="{ props }">
                     <v-btn icon v-bind="props" size="large">
                         <v-avatar size="36">
-                            <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+                            <v-img :src="user.personal?.image"></v-img>
                         </v-avatar>
                     </v-btn>
                 </template>
@@ -165,14 +166,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-
-const router = useRouter()
 const drawer = ref(true)
 const rail = ref(false)
 const authStore = useAuthStore()
 
+const user = authStore.user.data
 
 const menuItems = ref([
   { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/', color: 'blue' },
@@ -214,10 +213,12 @@ const isTokenExpired = () => {
  if (authStore.value === null) return true;
  else return false
 }
-
 </script>
 
 <style scoped>
+* {
+  font-family: 'Rubik', sans-serif;
+}
 .v-navigation-drawer {
   border-right: none !important;
 }

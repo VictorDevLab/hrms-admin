@@ -6,6 +6,7 @@ export const useAuthStore = defineStore('auth', {
     state: () => ({
         token: null,
         userId: null,
+        user: null,
         isAuthenticated: false,
     }),
 
@@ -14,8 +15,8 @@ export const useAuthStore = defineStore('auth', {
             try {
                 const response = await axios.post('http://localhost:3001/api/auth/login', {email, password});
                 this.token = response.data.accessToken;
-                this.userId = response.data.user.user_Id;
-                console.log('UserId:', this.userId);
+                this.userId = response.data.user.id;
+                await this.getUserDetails()
                 this.isAuthenticated = true;
                 router.push('/'); 
             } catch(error) {
@@ -23,6 +24,16 @@ export const useAuthStore = defineStore('auth', {
                 throw error;
             }
         }, 
+        async getUserDetails() {
+            const AuthStr = 'Bearer '.concat(this.token)
+            try {
+                const response = await axios.get(`http://localhost:3001/api/users/${this.userId}`, { headers: { Authorization: AuthStr }})
+                this.user = response
+            } catch (error) {
+                console.error('Error getting User Details:', error)
+                throw error;
+            }
+        },
         logout() {
             this.token = null;
             this.userId = null;

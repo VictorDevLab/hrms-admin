@@ -33,6 +33,8 @@
   import { ref } from 'vue'
   import AdminCentral from '@/components/AdminCentral/central.vue'
   import EmployeeManagement from '@/components/AdminCentral/employeeManagement.vue'
+  import EmployeeRequests from '@/components/AdminCentral/requests.vue'
+  import TeamCalendar from '@/components/AdminCentral/teamCalendar.vue'
   
   const selectedCard = ref('#admin-central');
 
