@@ -10,12 +10,16 @@
 <script setup>
 import MainLayout from './components/MainLayout.vue'
 import Login from './pages/Login/index.vue'
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
 
-const token = ref(authStore.token)
+onMounted(async () => {
+  if (!authStore.isAuthenticated) {
+    await authStore.checkRefreshToken();
+  }
+});
 </script>
 
 <style>
@@ -27,30 +31,5 @@ const token = ref(authStore.token)
   font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-nav {
-  padding: 30px;
-  text-align: center;
-  background-color: #f8f9fa;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-  text-decoration: none;
-  margin: 0 10px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-nav a:hover {
-  background-color: #e9ecef;
-}
-
-nav a.router-link-exact-active {
-  color: #42b883;
-  background-color: #e8f5e8;
 }
 </style>

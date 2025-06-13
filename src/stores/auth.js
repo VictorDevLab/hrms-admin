@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia';
 import axios from 'axios';
 import router from '../router'; 
+import axiosInstance from '../axios'
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -32,6 +33,19 @@ export const useAuthStore = defineStore('auth', {
             } catch (error) {
                 console.error('Error getting User Details:', error)
                 throw error;
+            }
+        },
+        async checkRefreshToken() {
+            try {
+                const response = await axiosInstance.post('/api/refresh', {}, { withCredentials: true });
+                console.log("refresh...", response)
+                this.token = response.data.accessToken;
+                this.userId = response.data.user.id;
+                await this.getUserDetails();
+                this.isAuthenticated = true;
+            } catch (error) {
+                console.error('Refresh token failed:', error);
+                this.logout(); 
             }
         },
         logout() {
