@@ -1,8 +1,8 @@
 <template>
     <v-app>
         <!-- Navigation Drawer / Sidebar -->
-        <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false" color="white"
-            theme="light" width="280" rail-width="72" class="ma-0 pa-0" style="border-right: 7px solid #e0e0e0;">
+        <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false" color="white" theme="light"
+            width="280" rail-width="72" class="ma-0 pa-0" style="border-right: 7px solid #e0e0e0;">
             <!-- Company Logo -->
             <div class="pa-4 text-center" v-show="!rail">
                 <v-img src="/src/assets/logo.png" alt="Company Logo" class="mx-auto"></v-img>
@@ -19,28 +19,32 @@
                 </template>
 
                 <v-list-item-title v-show="!rail" class="font-weight-bold text-md-h6 mt-6 mr-2">
-                   {{user.personal?.firstName}} <br />
-                   {{user.personal?.lastName}}
+                    {{user.personal?.firstName}} <br />
+                    {{user.personal?.lastName}}
                 </v-list-item-title>
                 <v-list-item-subtitle v-show="!rail" class="text-grey-darken-4 mr-2">
-                  {{user.employment?.title}}
+                    {{user.employment?.title}}
                 </v-list-item-subtitle>
 
                 <template v-slot:append>
-                    <v-btn variant="text" :icon="rail ? 'mdi-chevron-right' : 'mdi-chevron-left'"
+                    <v-btn variant="tonal" :icon="rail ? 'mdi-chevron-right' : 'mdi-chevron-left'"
                         @click.stop="rail = !rail" color="blue" size="small"></v-btn>
                 </template>
             </v-list-item>
 
             <v-divider class="my-3"></v-divider>
             <v-list class="pt-0 darkBlue-heading-text ml-2">
-                <v-list-item v-for="item in menuItems" :key="item.title" :to="item.route">
+                <v-list-item v-for="item in menuItems" :key="item.title" :to="item.route"
+                    @click="selectMenu(item.title)" :style="selectedMenu == item.title
+                            ? 'background:transparent linear-gradient(295deg, #6488EE 0%, #0918F7 100%) 0% 0% no-repeat padding-box;'
+                            : ''
+                        " class="rounded">
                     <v-list-item-content>
                         <v-list-item-title class="darkBlue-heading-text d-flex justify-start"
                             style="font-size: 14px; width: 100%">
                             <div class="d-flex align-center" style="width: 100%">
                                 <v-icon :icon="item.icon" :color="item.color || 'primary'" class="mr-2 custom-icon" />
-                                <span style="white-space: nowrap">
+                                <span :style="selectedMenu == item.title ? 'color: white;' : ''">
                                     {{ item.title }}
                                 </span>
                             </div>
@@ -165,20 +169,20 @@
 
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 const drawer = ref(true)
 const rail = ref(false)
 const authStore = useAuthStore()
 
 const user = authStore.user.data
+const selectedMenu = ref(null)
 
 const menuItems = ref([
   { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/', color: 'blue' },
   { title: 'My Work', icon: 'mdi-briefcase', route: '/my-work', color: 'orange' },
   { title: 'HR Self Service', icon: 'mdi-account-group', route: '/hr-self-service', color: 'green' },
   { title: 'Admin Central', icon: 'mdi-shield-account', route: '/admin-central', color: 'deep-purple' },
-  { title: 'My Team', icon: 'mdi-account-multiple', route: '/my-team', color: 'yellow' },
   { title: 'My Projects', icon: 'mdi-folder-multiple', route: '/my-projects', color: 'light-blue' },
   { title: 'My Trainings', icon: 'mdi-school', route: '/trainings', color: 'pink' },
   { title: 'Employee Transition', icon: 'mdi-account-switch', route: '/employee-transition', color: 'red' },
@@ -194,9 +198,9 @@ const secondaryMenuItems = ref([
         route: '/configurations'
     },
     {
-        title: 'Reports',
+        title: 'My Profile',
         icon: 'mdi-chart-line',
-        route: '/reports'
+        route: '/my-profile'
     },
 
 ])
@@ -213,6 +217,14 @@ const isTokenExpired = () => {
  if (authStore.value === null) return true;
  else return false
 }
+
+const selectMenu = (menu) => {
+    selectedMenu.value = menu
+}
+
+onMounted(()=> {
+    selectedMenu.value = "Dashboard"
+})
 </script>
 
 <style scoped>
