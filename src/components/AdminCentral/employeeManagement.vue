@@ -49,7 +49,7 @@
       </v-col>
     </v-row>
     <div v-if="addNewEmp">
-      <AddNewEmployee @employeeAdded="employeeAdded" @closeEmpForm="closeEmpForm"/>
+      <AddNewEmployee :users="employees" @employeeAdded="employeeAdded" @closeEmpForm="closeEmpForm"/>
     </div>
     <!-- Employee List -->
     <v-row v-else>

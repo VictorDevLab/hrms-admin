@@ -111,8 +111,10 @@
                                         :items="employeeTypeOptions" variant="outlined" density="comfortable"></v-select>
                                 </v-col>
                                 <v-col cols="12" md="4">
-                                    <v-text-field v-model="employee.employment.roleId" label="Role ID"
-                                        variant="outlined" density="comfortable"></v-text-field>
+                                    <!-- <v-text-field v-model="employee.employment.roleId" label="Role ID"
+                                        variant="outlined" density="comfortable"></v-text-field> -->
+                                         <v-select v-model="employee.employment.roleId" label="Role ID"
+                                        :items="roles" variant="outlined" density="comfortable"></v-select>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.email" label="Email Address" type="email"
@@ -131,8 +133,8 @@
                                         prepend-inner-icon="mdi-badge-account" variant="outlined" density="comfortable"></v-text-field>
                                 </v-col> -->
                                 <v-col cols="12" md="4">
-                                    <v-text-field v-model="employee.employment.manager" label="Manager"
-                                        prepend-inner-icon="mdi-account-supervisor" variant="outlined" density="comfortable"></v-text-field>
+                                         <v-autocomplete v-model="employee.employment.manager" item-title="fullName"  item-value="_id" label="Manager"
+                                        :items="managersList" variant="outlined" density="comfortable"></v-autocomplete>
                                 </v-col>
                                 <v-col cols="12" md="4">
                                     <v-text-field v-model="employee.employment.dateOfJoining" label="Date of Joining"
@@ -336,11 +338,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 import VueCropper from 'vue-cropperjs';
 import 'vue-cropperjs/node_modules/cropperjs/dist/cropper.css';
+
+const props = defineProps(['users'])
 
 const emit = defineEmits(['employeeAdded', 'closeEmpForm']);
 // Cloudinary configuration
@@ -441,6 +445,7 @@ const departmentOptions = ['HR', 'IT', 'Finance', 'Marketing', 'Sales', 'Operati
 const employeeTypeOptions = ['Full-time', 'Part-time', 'Contract', 'Intern']
 const currencyOptions = ['USD', 'EUR', 'GBP', 'KES', 'NGN', 'ZAR']
 const payFrequencyOptions = ['Weekly', 'Bi-weekly', 'Monthly', 'Quarterly', 'Annually']
+const roles = ['Admin', 'Manager', 'Employee']
 
 const submitForm = async () => {
     const token = authStore.token
@@ -507,6 +512,14 @@ const uploadImage = async () => {
     uploading.value = false;
   }
 };
+
+const managersList = computed(()=> {
+    //TODO return employees with emp type Manager
+     return props.users.map(user => ({
+      ...user,
+      fullName: `${user.personal.firstName} ${user.personal.lastName}`
+     }))
+})
 </script>
 
 <style>

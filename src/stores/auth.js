@@ -14,7 +14,7 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         async login(email, password) {
             try {
-                const response = await axios.post('http://localhost:3001/api/auth/login', {email, password});
+                const response = await axiosInstance.post('/api/auth/login', {email, password});
                 this.token = response.data.accessToken;
                 this.userId = response.data.user.id;
                 await this.getUserDetails()
@@ -28,7 +28,7 @@ export const useAuthStore = defineStore('auth', {
         async getUserDetails() {
             const AuthStr = 'Bearer '.concat(this.token)
             try {
-                const response = await axios.get(`http://localhost:3001/api/users/${this.userId}`, { headers: { Authorization: AuthStr }})
+                const response = await axiosInstance.get(`/api/users/${this.userId}`, { headers: { Authorization: AuthStr }})
                 this.user = response
             } catch (error) {
                 console.error('Error getting User Details:', error)

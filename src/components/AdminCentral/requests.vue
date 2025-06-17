@@ -2,7 +2,7 @@
   <v-row class="ma-0">
     <!-- Left Panel - All Pending Requests -->
     <v-col cols="6" class="pa-2">
-      <v-card elevation="2" class="h-100">
+      <v-card elevation="2" rounded="lg" class="h-100">
         <v-card-title class="text-h6 pa-3 d-flex align-center" style="background-color: #f5f5f5;">
           <v-icon class="mr-2">mdi-clipboard-list</v-icon>
           All Pending Requests
@@ -73,7 +73,7 @@
 
     <!-- Right Panel - Request Details -->
     <v-col cols="6" class="pa-2">
-      <v-card elevation="2" class="h-100" v-if="selectedRequest">
+      <v-card elevation="2" rounded="lg" class="h-100" v-if="selectedRequest">
         <v-card-title class="text-h6 pa-3 d-flex align-center" style="background-color: #e3f2fd;">
           <v-icon class="mr-2">mdi-information</v-icon>
           Request Information {{ selectedRequest.requestType }}
@@ -210,141 +210,6 @@ const requests = ref([
       avatar: 'https://randomuser.me/api/portraits/men/10.jpg'
     }
   },
-  {
-    id: 2,
-    name: 'Joseph Chong',
-    type: 'WFH',
-    requestType: 'WFH',
-    duration: '01 Day',
-    days: '01',
-    avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
-    requestedDate: 'Jun 09, 2025',
-    fromDate: 'Monday, Jun 09, 2025',
-    toDate: 'Monday, Jun 09, 2025',
-    reason: 'Test Emails',
-    approver: {
-      name: 'Zaki Farooq',
-      status: 'Pending',
-      comments: 'There are no comments!',
-      avatar: 'https://randomuser.me/api/portraits/men/11.jpg'
-    }
-  },
-  {
-    id: 3,
-    name: 'Sample Admin Dev',
-    type: 'Annual Leaves',
-    requestType: 'leave',
-    duration: '01 Day',
-    days: '01',
-    avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
-    requestedDate: 'Jun 08, 2025',
-    fromDate: 'Tuesday, Jun 10, 2025',
-    toDate: 'Tuesday, Jun 10, 2025',
-    reason: 'Medical',
-    approver: {
-      name: 'HR Manager',
-      status: 'Processing',
-      comments: 'There are no comments!',
-      avatar: 'https://randomuser.me/api/portraits/women/1.jpg'
-    }
-  },
-  {
-    id: 4,
-    name: 'Sample Admin Dev',
-    type: 'Salary Certificate',
-    requestType: 'letter',
-    duration: '-',
-    days: '-',
-    avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
-    requestedDate: 'Jun 07, 2025',
-    fromDate: '-',
-    toDate: '-',
-    reason: 'Bank Requirements',
-    approver: {
-      name: 'Finance Head',
-      status: 'Processing',
-      comments: 'There are no comments!',
-      avatar: 'https://randomuser.me/api/portraits/women/2.jpg'
-    }
-  },
-  {
-    id: 5,
-    name: 'Sample Admin Dev',
-    type: 'Mileage',
-    requestType: 'claim',
-    duration: '-',
-    days: '-',
-    amount: '49500',
-    avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
-    requestedDate: 'Jun 06, 2025',
-    fromDate: 'Jun 01, 2025',
-    toDate: 'Jun 05, 2025',
-    reason: 'Business Travel',
-    approver: {
-      name: 'Department Head',
-      status: 'Processing',
-      comments: 'There are no comments!',
-      avatar: 'https://randomuser.me/api/portraits/men/12.jpg'
-    }
-  },
-  {
-    id: 6,
-    name: 'Sample Admin Dev',
-    type: 'Client Meal (Business Event / Meeting)',
-    requestType: 'claim',
-    duration: '-',
-    days: '-',
-    amount: '10000',
-    avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
-    requestedDate: 'Jun 05, 2025',
-    fromDate: 'Jun 04, 2025',
-    toDate: 'Jun 04, 2025',
-    reason: 'Client Meeting',
-    approver: {
-      name: 'Department Head',
-      status: 'Processing',
-      comments: 'There are no comments!',
-      avatar: 'https://randomuser.me/api/portraits/men/12.jpg'
-    }
-  },
-  {
-    id: 7,
-    name: 'Ana Lou Salvador',
-    type: 'Maternity Leaves',
-    requestType: 'leave',
-    duration: '60 Days',
-    days: '60',
-    avatar: 'https://randomuser.me/api/portraits/women/3.jpg',
-    requestedDate: 'Jun 04, 2025',
-    fromDate: 'Jul 01, 2025',
-    toDate: 'Aug 30, 2025',
-    reason: 'Maternity Leave',
-    approver: {
-      name: 'HR Director',
-      status: 'Processing',
-      comments: 'There are no comments!',
-      avatar: 'https://randomuser.me/api/portraits/women/4.jpg'
-    }
-  },
-  {
-    id: 8,
-    name: 'Sample Admin Dev',
-    type: 'Travel Request Form',
-    requestType: 'letter',
-    duration: '-',
-    days: '-',
-    avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
-    requestedDate: 'Jun 03, 2025',
-    fromDate: 'Jun 15, 2025',
-    toDate: 'Jun 20, 2025',
-    reason: 'Business Trip',
-    approver: {
-      name: 'Travel Coordinator',
-      status: 'Processing',
-      comments: 'There are no comments!',
-      avatar: 'https://randomuser.me/api/portraits/women/5.jpg'
-    }
-  }
 ])
 
 // Computed property for filtered requests based on search

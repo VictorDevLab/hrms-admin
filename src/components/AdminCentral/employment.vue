@@ -293,14 +293,25 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="4">
-                  <v-text-field
+                  <!-- <v-text-field
                     v-model="editableEmployee.employment.manager"
                     label="Manager"
                     prepend-inner-icon="mdi-account-supervisor"
                     variant="outlined"
                     :readonly="!editMode"
                     :bg-color="editMode ? 'white' : 'grey-lighten-4'"
-                  ></v-text-field>
+                  ></v-text-field> -->
+                  <v-autocomplete 
+                    v-model="editableEmployee.employment.manager" 
+                    item-title="fullName" 
+                    item-value="_id" 
+                    label="Manager"
+                    :items="managersList"
+                    prepend-inner-icon="mdi-account-supervisor"
+                    variant="outlined" 
+                    :readonly="!editMode"
+                    :bg-color="editMode ? 'white' : 'grey-lighten-4'">
+                  </v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="4">
                   <v-text-field
@@ -606,7 +617,7 @@ const showSuccessDialog = ref(false)
 // Initialize data structure
 const initializeEmployee = (employee) => {
   return {
-    id: employee?.id || '',
+    id: employee?._id || '',
     email: employee?.email || '',
     password: employee?.password || '',
     personal: {
@@ -675,7 +686,13 @@ const filteredUsers = computed(() => {
            employeeId.includes(query)
   })
 })
-
+const managersList = computed(()=> {
+    //TODO return employees with emp type Manager
+     return props.users.map(user => ({
+      ...user,
+      fullName: `${user.personal.firstName} ${user.personal.lastName}`
+     }))
+})
 // Methods
 const selectEmployee = (employee) => {
   selectedEmployeeId.value = employee._id
@@ -699,6 +716,7 @@ const saveChanges = async () => {
   const AuthStr = 'Bearer '.concat(token)
 
   const payload = editableEmployee.value
+  console.log("payload", payload)
   try {
     const response = await axios.put(`http://localhost:3001/api/users/updateUser/${selectedEmployeeId.value}`, payload, { headers: { Authorization: AuthStr } })
     if (response.status === 200) {

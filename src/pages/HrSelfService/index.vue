@@ -40,17 +40,29 @@
 
   const cards = ref([
     {
-        title: 'My Tasks',
+        title: 'Dashboard',
         id: '#dashboard',
         icon: 'mdi-briefcase',
         color: 'blue',
     },
     {
-        title: 'My Projects',
+        title: 'Requests',
         id: '#requests',
         icon: 'mdi-account-group',
         color: 'green',
     },
+    // {
+    //     title: 'Attendance',
+    //     id: '#attendance',
+    //     icon: 'mdi-shield-account',
+    //     color: 'orange',
+    // },
+    {
+        title: 'Team <br/> Calendar',
+        id: '#team-calendar',
+        icon: 'mdi-chart-line',
+        color: 'purple',
+    }
 ])
 
 

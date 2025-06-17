@@ -13,11 +13,11 @@ const routes = [
     name: 'MyWork',
     component: () => import('../pages/MyWork/index.vue')
   },
-//   {
-//     path: '/hr-self-service',
-//     name: 'HRSelfService',
-//     component: () => import('../pages/HRSelfService.vue')
-//   },
+  {
+    path: '/hr-self-service',
+    name: 'HRSelfService',
+    component: () => import('../pages/HrSelfService/index.vue')
+  },
   {
     path: '/admin-central',
     name: 'AdminCentral',
