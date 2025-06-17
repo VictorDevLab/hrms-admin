@@ -120,7 +120,7 @@
       v-model="snackbar.show"
       :color="snackbar.color"
       :timeout="snackbar.timeout"
-      location="top"
+      location="bottom"
     >
       {{ snackbar.text }}
     </v-snackbar>
@@ -181,7 +181,7 @@ const login = async () => {
   } 
   } catch (error) {
     console.error('Login error:', error)
-    showSnackbar('An error occurred while logging in.', "error")
+    showSnackbar('Invalid Email or Password.', "error")
     isSubmitting.value = false
     return
   }

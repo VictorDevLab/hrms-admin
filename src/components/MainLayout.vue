@@ -5,7 +5,7 @@
             width="280" rail-width="72" class="ma-0 pa-0" style="border-right: 7px solid #e0e0e0;">
             <!-- Company Logo -->
             <div class="pa-4 text-center" v-show="!rail">
-                <v-img src="/src/assets/logo.png" alt="Company Logo" class="mx-auto"></v-img>
+                <v-img src="/src/assets/logo.png" width="210" alt="Company Logo" class="mx-auto"></v-img>
             </div>
 
             <!-- User Profile Section -->
@@ -43,7 +43,7 @@
                         <v-list-item-title class="darkBlue-heading-text d-flex justify-start"
                             style="font-size: 14px; width: 100%">
                             <div class="d-flex align-center" style="width: 100%">
-                                <v-icon :icon="item.icon" :color="item.color || 'primary'" class="mr-2 custom-icon" />
+                                <v-icon size="24" :icon="item.icon" :color="item.color || 'primary'" class="mr-2 custom-icon" />
                                 <span :style="selectedMenu == item.title ? 'color: white;' : ''">
                                     {{ item.title }}
                                 </span>
@@ -55,13 +55,17 @@
 
             <v-divider class="my-3"></v-divider>
             <v-list class="pt-0 darkBlue-heading-text ml-2">
-                <v-list-item v-for="item in secondaryMenuItems" :key="item.title" :to="item.route">
+                  <v-list-item v-for="item in secondaryMenuItems" :key="item.title" :to="item.route"
+                    @click="selectMenu(item.title)" :style="selectedMenu == item.title
+                            ? 'background:transparent linear-gradient(295deg, #6488EE 0%, #0918F7 100%) 0% 0% no-repeat padding-box;'
+                            : ''
+                        " class="rounded">
                     <v-list-item-content>
                         <v-list-item-title class="darkBlue-heading-text d-flex justify-start"
                             style="font-size: 14px; width: 100%">
                             <div class="d-flex align-center" style="width: 100%">
-                                <v-icon :icon="item.icon" :color="item.color || 'primary'" class="mr-2 custom-icon" />
-                                <span style="white-space: nowrap">
+                                <v-icon size="24" :icon="item.icon" :color="item.color || 'primary'" class="mr-2 custom-icon" />
+                                <span :style="selectedMenu == item.title ? 'color: white;' : ''">
                                     {{ item.title }}
                                 </span>
                             </div>
@@ -73,14 +77,6 @@
             <!-- Bottom Section -->
             <template v-slot:append>
                 <v-divider></v-divider>
-                <!-- <v-list density="compact" nav class="px-2 pb-3">
-                    <v-list-item prepend-icon="mdi-logout" title="Logout" @click="logout" color="red"
-                        class="mt-2" rounded="lg">
-                        <template v-slot:prepend>
-                            <v-icon icon="mdi-logout" class="me-3"></v-icon>
-                        </template>
-                </v-list-item>
-            </v-list> -->
                 <v-list class="pt-0 darkBlue-heading-text ml-2">
                     <v-list-item @click="logout" class="ml-2">
                         <v-list-item-content>
@@ -183,8 +179,8 @@ const menuItems = ref([
   { title: 'My Work', icon: 'mdi-briefcase', route: '/my-work', color: 'orange' },
   { title: 'HR Self Service', icon: 'mdi-account-group', route: '/hr-self-service', color: 'green' },
   { title: 'Admin Central', icon: 'mdi-shield-account', route: '/admin-central', color: 'deep-purple' },
-  { title: 'My Projects', icon: 'mdi-folder-multiple', route: '/my-projects', color: 'light-blue' },
-  { title: 'My Trainings', icon: 'mdi-school', route: '/trainings', color: 'pink' },
+//   { title: 'My Projects', icon: 'mdi-folder-multiple', route: '/my-projects', color: 'light-blue' },
+  { title: 'Training & Development', icon: 'mdi-school', route: '/trainings', color: 'pink' },
   { title: 'Employee Transition', icon: 'mdi-account-switch', route: '/employee-transition', color: 'red' },
   { title: 'Payroll Central', icon: 'mdi-cash-multiple', route: '/payroll-central', color: 'green' },
   { title: 'Performance Hub', icon: 'mdi-chart-line', route: '/performance', color: 'red' },
@@ -199,8 +195,15 @@ const secondaryMenuItems = ref([
     },
     {
         title: 'My Profile',
-        icon: 'mdi-chart-line',
-        route: '/my-profile'
+        icon: 'mdi-account',
+        route: '/my-profile',
+        color: 'brown-darken-1'
+    },
+    {
+        title: 'Support',
+        icon: 'mdi-face-agent',
+        route: '/my-profile',
+        color: 'orange-darken-4'
     },
 
 ])
@@ -213,15 +216,10 @@ const logout = () => {
         authStore.logout()
     }, 1500) 
 }
-const isTokenExpired = () => {
- if (authStore.value === null) return true;
- else return false
-}
 
 const selectMenu = (menu) => {
     selectedMenu.value = menu
 }
-
 onMounted(()=> {
     selectedMenu.value = "Dashboard"
 })
