@@ -157,7 +157,6 @@
             <v-card-title class="text-center">Logging Out...</v-card-title>
             <v-card-text class="text-center">
                 <v-progress-circular indeterminate color="red" size="64"></v-progress-circular>
-                <!-- <p class="mt-4">Logging Out...</p>   -->
             </v-card-text>
         </v-card>
     </v-dialog>
