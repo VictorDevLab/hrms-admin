@@ -339,7 +339,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import axios from 'axios'
+import axios from 'axios';
+import axiosInstance from '@/axios'
 import { useAuthStore } from '@/stores/auth'
 import VueCropper from 'vue-cropperjs';
 import 'vue-cropperjs/node_modules/cropperjs/dist/cropper.css';
@@ -454,7 +455,7 @@ const submitForm = async () => {
     
     const payload = employee.value
     try {
-        const response = await axios.post('http://localhost:3001/api/users/createNew', payload, { headers: { Authorization: AuthStr }})
+        const response = await axiosInstance.post('/api/users/createNew', payload, { headers: { Authorization: AuthStr }})
         if(response.status == 201) {
             showSuccessDialog.value = true
         }

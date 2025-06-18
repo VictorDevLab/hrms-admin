@@ -21,33 +21,29 @@
             </div>
         </v-row>
         <div class="pa-0 ma-0">
-            <Dashboard v-if="selectedCard === '#dashboard'" />
-            <Requests v-if="selectedCard === '#requests'" />
-            <Attendance v-if="selectedCard === '#attendance'" />
-            <TeamCalendar v-if="selectedCard === '#team-calendar'" />
+            <Tasks v-if="selectedCard === '#tasks'" />
+            <Projects v-if="selectedCard === '#projects'" />
         </div>
   </div>
   </template>
 
   <script setup>
   import { ref } from 'vue'
-  import Dashboard from '@/components/HrSelfService/dashboard.vue'
-  import Requests from '@/components/HrSelfService/requests.vue'
-  import Attendance from '@/components/HrSelfService/attendance.vue'
-  import TeamCalendar from '@/components/HrSelfService/teamCalendar.vue'
+  import Tasks from '@/components/MyWork/tasks.vue'
+  import Projects from '@/components/MyWork/projects.vue'
   
-  const selectedCard = ref('#dashboard');
+  const selectedCard = ref('#tasks');
 
   const cards = ref([
     {
         title: 'My Tasks',
-        id: '#dashboard',
+        id: '#tasks',
         icon: 'mdi-briefcase',
         color: 'blue',
     },
     {
         title: 'My Projects',
-        id: '#requests',
+        id: '#projects',
         icon: 'mdi-account-group',
         color: 'green',
     },

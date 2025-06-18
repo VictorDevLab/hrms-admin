@@ -2,7 +2,7 @@
     <v-app>
         <!-- Navigation Drawer / Sidebar -->
         <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false" color="white" theme="light"
-            width="280" rail-width="72" class="ma-0 pa-0" style="border-right: 7px solid #e0e0e0;">
+            width="280" rail-width="72" class="ma-0 pa-0 custom-scrollbar" style="border-right: 7px solid #e0e0e0;">
             <!-- Company Logo -->
             <div class="pa-4 text-center" v-show="!rail">
                 <v-img src="/src/assets/logo.png" width="210" alt="Company Logo" class="mx-auto"></v-img>
@@ -54,7 +54,7 @@
             </v-list>
 
             <v-divider class="my-3"></v-divider>
-            <v-list class="pt-0 darkBlue-heading-text ml-2">
+            <v-list class="pt-0 darkBlue-heading-text ml-2 custom-scrollbar">
                   <v-list-item v-for="item in secondaryMenuItems" :key="item.title" :to="item.route"
                     @click="selectMenu(item.title)" :style="selectedMenu == item.title
                             ? 'background:transparent linear-gradient(295deg, #6488EE 0%, #0918F7 100%) 0% 0% no-repeat padding-box;'
@@ -77,7 +77,7 @@
             <!-- Bottom Section -->
             <template v-slot:append>
                 <v-divider></v-divider>
-                <v-list class="pt-0 darkBlue-heading-text ml-2">
+                <v-list class="pt-0 darkBlue-heading-text ml-2 custom-scrollbar">
                     <v-list-item @click="logout" class="ml-2">
                         <v-list-item-content>
                             <v-list-item-title class="darkBlue-heading-text d-flex justify-start"
@@ -178,14 +178,14 @@ const menuItems = ref([
   { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/', color: 'blue' },
   { title: 'My Work', icon: 'mdi-briefcase', route: '/my-work', color: 'orange' },
   { title: 'HR Self Service', icon: 'mdi-account-group', route: '/hr-self-service', color: 'green' },
-  { title: 'Admin Central', icon: 'mdi-shield-account', route: '/admin-central', color: 'deep-purple' },
-//   { title: 'My Projects', icon: 'mdi-folder-multiple', route: '/my-projects', color: 'light-blue' },
+  { title: 'Manager Central', icon: 'mdi-shield-account', route: '/manager-central', color: 'deep-purple' },
+  //   { title: 'My Projects', icon: 'mdi-folder-multiple', route: '/my-projects', color: 'light-blue' },
   { title: 'Training & Development', icon: 'mdi-school', route: '/trainings', color: 'pink' },
   { title: 'Employee Transition', icon: 'mdi-account-switch', route: '/employee-transition', color: 'red' },
   { title: 'Payroll Central', icon: 'mdi-cash-multiple', route: '/payroll-central', color: 'green' },
-  { title: 'Performance Hub', icon: 'mdi-chart-line', route: '/performance', color: 'red' },
-  { title: 'Assets', icon: 'mdi-laptop', route: '/assets', color: 'red' },
-  { title: 'Reports', icon: 'mdi-file-chart', route: '/reports', color: 'red' }
+  { title: 'Performance Hub', icon: 'mdi-speedometer', route: '/performance', color: 'red' },
+  { title: 'Assets', icon: 'mdi-laptop', route: '/assets', color: 'orange-darken-2' },
+  { title: 'Reports', icon: 'mdi-file-chart', route: '/reports', color: 'blue-darken-2' }
 ])
 const secondaryMenuItems = ref([
     {

@@ -597,7 +597,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import axios from 'axios'
+import axiosInstance from '@/axios'
 
 const props = defineProps(['employee', 'users'])
 const emit = defineEmits(['closeEmpForm', 'employeeUpdated'])
@@ -718,7 +718,7 @@ const saveChanges = async () => {
   const payload = editableEmployee.value
   console.log("payload", payload)
   try {
-    const response = await axios.put(`http://localhost:3001/api/users/updateUser/${selectedEmployeeId.value}`, payload, { headers: { Authorization: AuthStr } })
+    const response = await axiosInstance.put(`/api/users/updateUser/${selectedEmployeeId.value}`, payload, { headers: { Authorization: AuthStr } })
     if (response.status === 200) {
         showSuccessDialog.value = true
       }

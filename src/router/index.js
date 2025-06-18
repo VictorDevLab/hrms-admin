@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../pages/Home.vue'
-import About from '../pages/About.vue'
+import ManagerCentral from '../pages/AdminCentral/index.vue'
+import HrSelfService from '../pages/HrSelfService/index.vue'
+import MyWork from '../pages/MyWork/index.vue'
 
 const routes = [
   {
@@ -11,17 +13,17 @@ const routes = [
   {
     path: '/my-work',
     name: 'MyWork',
-    component: () => import('../pages/MyWork/index.vue')
+    component: MyWork
   },
   {
     path: '/hr-self-service',
     name: 'HRSelfService',
-    component: () => import('../pages/HrSelfService/index.vue')
+    component: HrSelfService
   },
   {
-    path: '/admin-central',
-    name: 'AdminCentral',
-    component: () => import('../pages/AdminCentral/index.vue')
+    path: '/manager-central',
+    name: 'ManagerCentral',
+    component: ManagerCentral
   },
 //   {
 //     path: '/payroll-central',
