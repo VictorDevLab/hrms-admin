@@ -20,7 +20,7 @@
               <v-icon size="small">mdi-magnify</v-icon>
             </template>
           </v-text-field>
-          <v-btn icon="mdi-plus" color="primary" size="small"></v-btn>
+          <!-- <v-btn icon="mdi-plus" color="primary" size="small"></v-btn> -->
         </v-card-title>
         
         <v-list class="pa-0">
@@ -184,10 +184,17 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import axiosInstance from '../../axios'
+import { useAuthStore } from '@/stores/auth'
 
 const searchQuery = ref('')
 const selected = ref([])
 const selectedRequest = ref(null)
+const loadingRequests = ref(false)
+
+const authStore = useAuthStore()
+const user = authStore.user.data
+const approver = ref(null)
 
 // Dummy data for requests
 const requests = ref([
@@ -228,6 +235,40 @@ const selectRequest = (request) => {
   selectedRequest.value = request
 }
 
+const getAllRequests = async() => {
+  loadingRequests.value = true
+  const token = authStore.token
+  const AuthStr = 'Bearer '.concat(token)
+
+  try {
+    const response = await axiosInstance.get(`/api/requests/`, {headers: {Authorization: AuthStr}})
+    if (response.status === 200) {
+      console.log("response", response.data)
+      //requests.value = response.data.reverse()
+    } 
+   // selectedRequest.value = requests.value[0] 
+   // await getApprover(selectedRequest.value?.approver) 
+
+  } catch(error) {
+   console.log("error", error)
+  } finally {
+    loadingRequests.value = false
+  }
+
+}
+const getApprover = async (managerId) => {
+  const token = authStore.token
+  const AuthStr = 'Bearer '.concat(token)
+  try {
+    const response = await axiosInstance.get(`/api/users/${managerId}`, { headers: { Authorization: AuthStr } })
+    approver.value = response.data
+    console.log("approver", approver.value)
+  } catch (error) {
+    console.error('Error getting User Details:', error)
+    throw error;
+  }
+}
+
 // Function to get color for request type chips
 const getRequestTypeColor = (type) => {
   switch (type) {
@@ -239,7 +280,8 @@ const getRequestTypeColor = (type) => {
   }
 }
 
-onMounted(()=> {
+onMounted(async()=> {
+  await getAllRequests()
     selectedRequest.value = requests.value[0]
 })
 

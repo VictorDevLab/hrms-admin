@@ -8,7 +8,7 @@
           </div>
           <div class="ml-4">
             <p class="text-h6 font-weight-semibold gradient-text ma-0">
-              ALPHA  CO. LTD
+              ALPHA  CO.LTD
             </p>
           </div>
         </div>
@@ -213,7 +213,7 @@ const login = async () => {
    height: 50px;
   }
   .login_wrapper {
-    overflow: hidden;
+    overflow: auto;
   }
 }
 .gradient-text {

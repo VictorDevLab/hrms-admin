@@ -98,7 +98,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import axios from "axios";
+import axiosInstance from "@/axios";
 import { useAuthStore } from "@/stores/auth";
 import AddNewEmployee from "@/components/reusable/addNew.vue";
 import Employment from "@/components/AdminCentral/employment.vue"
@@ -115,7 +115,7 @@ const getAllEmployees = async () => {
      const token = authStore.token
      const AuthStr = 'Bearer '.concat(token)
   try {
-      const response = await axios.get('http://localhost:3001/api/users/getAll', { headers: { Authorization: AuthStr }});
+      const response = await axiosInstance.get('/api/users/getAll', { headers: { Authorization: AuthStr }});
       employees.value = response.data; 
   } catch (error) {
     console.error("Error fetching employees:", error);

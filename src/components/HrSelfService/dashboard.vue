@@ -133,13 +133,6 @@
                                     </div>
                                 </div>
                             </v-card-text>
-
-                            <v-card-actions class="justify-center pb-4">
-                                <v-btn variant="outlined" color="blue-darken-4" rounded="pill"
-                                    prepend-icon="mdi-calendar-month">
-                                    View All Holidays
-                                </v-btn>
-                            </v-card-actions>
                         </v-card-text>
                     </v-card>
                 </v-col>
@@ -504,7 +497,7 @@ const filteredLeave = computed(() => {
 }
 
 .holiday-list {
-    max-height: 300px;
+    max-height: 350px;
     overflow-y: auto;
 }
 
