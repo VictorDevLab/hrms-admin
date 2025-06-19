@@ -183,18 +183,18 @@
             </v-col>
             <v-col cols="6">
               <div class="text-caption text-grey-darken-1 mb-1">requested on date</div>
-              <div class="text-body-2 font-weight-medium">{{ selectedRequest.createdAt }}</div>
+              <div class="text-body-2 font-weight-medium">{{ formatDate(selectedRequest.createdAt) }}</div>
             </v-col>
           </v-row>
 
           <v-row class="mb-4">
             <v-col cols="6">
               <div class="text-caption text-grey-darken-1 mb-1">from date</div>
-              <div class="text-body-2 font-weight-medium">{{ selectedRequest.startDate }}</div>
+              <div class="text-body-2 font-weight-medium">{{ formatDate(selectedRequest.startDate) }}</div>
             </v-col>
             <v-col cols="6">
               <div class="text-caption text-grey-darken-1 mb-1">to date</div>
-              <div class="text-body-2 font-weight-medium">{{ selectedRequest.endDate }}</div>
+              <div class="text-body-2 font-weight-medium">{{formatDate(selectedRequest.endDate) }}</div>
             </v-col>
           </v-row>
 
@@ -274,6 +274,7 @@
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import axiosInstance from '../../axios'
+import { formatDate } from '@/utils/dateFormatter';
 
 const authStore = useAuthStore()
 //.data, object from pinia store
