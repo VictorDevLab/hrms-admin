@@ -119,49 +119,50 @@
           <v-spacer></v-spacer>
           <v-btn icon="mdi-plus" @click="createRequest" color="primary" size="small"></v-btn>
         </v-card-title>
-        
+
         <div v-if="loadingRequests" cols="12" sm="6" md="4" lg="3" v-for="i in 9" :key="i">
-       <v-skeleton-loader class="mx-auto" type="list-item-avatar-two-line"></v-skeleton-loader>
-     </div>
-        <div v-else class="custom-scrollbar" style="overflow-y: auto; height: 550px;">
-        <v-list class="pa-0 scroll">
-          <v-list-item v-for="request in requests" :key="request.id" :value="request.id" class="px-3 py-2 border-b"
-            :class="{ 'bg-blue-lighten-5': selectedRequest?._id === request._id }" @click="selectRequest(request)">
-            <template v-slot:prepend>
-              <v-avatar size="40" class="mr-3">
-                <v-img :src="user.personal.image" :alt="user.personal.firstName"></v-img>
-              </v-avatar>
-            </template>
-
-            <v-list-item-content>
-              <div class="d-flex justify-space-between align-center mb-1">
-                <div>
-                  <div class="font-weight-medium text-body-2">{{ user.personal.firstName }} {{ user.personal.lastName }}
-                  </div>
-                  <div class="text-caption text-grey-darken-1">{{ request.leaveType }}</div>
-                </div>
-                <div class="text-right">
-                  <v-chip :color="getRequestTypeColor(request.leaveType)" size="small" class="mb-1">
-                    {{ request.leaveType }}
-                  </v-chip>
-                </div>
-              </div>
-
-              <div class="d-flex justify-space-between align-center">
-                <div class="d-flex align-center text-caption text-grey-darken-1">
-                  <v-icon size="small" class="mr-1">mdi-calendar</v-icon>
-                  {{ request.numberOfDays }}
-                </div>
-                <div v-if="request.amount" class="text-right">
-                  <span class="text-caption text-grey-darken-1">{{ request.amount }} </span>
-                  <span class="text-caption text-grey-darken-1"> USD</span>
-                </div>
-              </div>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+          <v-skeleton-loader class="mx-auto" type="list-item-avatar-two-line"></v-skeleton-loader>
         </div>
-    
+        <div v-else class="custom-scrollbar" style="overflow-y: auto; height: 550px;">
+          <v-list class="pa-0 scroll">
+            <v-list-item v-for="request in requests" :key="request.id" :value="request.id" class="px-3 py-2 border-b"
+              :class="{ 'bg-blue-lighten-5': selectedRequest?._id === request._id }" @click="selectRequest(request)">
+              <template v-slot:prepend>
+                <v-avatar size="40" class="mr-3">
+                  <v-img :src="user.personal.image" :alt="user.personal.firstName"></v-img>
+                </v-avatar>
+              </template>
+
+              <v-list-item-content>
+                <div class="d-flex justify-space-between align-center mb-1">
+                  <div>
+                    <div class="font-weight-medium text-body-2">{{ user.personal.firstName }} {{ user.personal.lastName
+                      }}
+                    </div>
+                    <div class="text-caption text-grey-darken-1">{{ request.leaveType }}</div>
+                  </div>
+                  <div class="text-right">
+                    <v-chip :color="getRequestTypeColor(request.leaveType)" size="small" class="mb-1">
+                      {{ request.leaveType }}
+                    </v-chip>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-space-between align-center">
+                  <div class="d-flex align-center text-caption text-grey-darken-1">
+                    <v-icon size="small" class="mr-1">mdi-calendar</v-icon>
+                    {{ request.numberOfDays }}
+                  </div>
+                  <div v-if="request.amount" class="text-right">
+                    <span class="text-caption text-grey-darken-1">{{ request.amount }} </span>
+                    <span class="text-caption text-grey-darken-1"> USD</span>
+                  </div>
+                </div>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </div>
+
       </v-card>
     </v-col>
     <v-col cols="12" md="6" class="pa-2">
@@ -245,8 +246,7 @@
           <!-- Action -->
           <v-row class="mt-4">
             <v-col>
-              <v-btn :disabled="selectedRequest.status === 'Completed'" color="error" variant="outlined"
-                class="mr-2">
+              <v-btn :disabled="selectedRequest.status === 'Completed'" color="error" variant="outlined" class="mr-2">
                 <v-icon left>mdi-close</v-icon>
                 Withdraw
               </v-btn>
@@ -263,9 +263,10 @@
         </div>
       </v-card>
     </v-col>
-     <v-snackbar v-model="snackbar.show" :color="snackbar.color"style="position: absolute; right: 100px; bottom: 2px" :timeout="snackbar.timeout" location="bottom">
-            {{ snackbar.text }}
-        </v-snackbar>
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" style="position: absolute; right: 100px; bottom: 2px"
+      :timeout="snackbar.timeout" location="bottom">
+      {{ snackbar.text }}
+    </v-snackbar>
   </v-row>
 </template>
 
