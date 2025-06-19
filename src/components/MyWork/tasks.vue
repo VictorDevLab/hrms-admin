@@ -18,7 +18,7 @@
           <template v-slot:item.title="{ item }" class="py-4">
             <div>
               <div class="font-weight-medium mb-1">{{ item.title }}</div>
-              <div class="text-caption text-medium-emphasis">{{ item.dueDate }}</div>
+              <div class="text-caption text-medium-emphasis">{{ formatDate(item.dueDate) }}</div>
             </div>
           </template>
 
@@ -49,7 +49,7 @@
              <v-btn icon @click="editTask(item)" size="small" flat>
               <v-icon color="blue">mdi-pencil</v-icon>
             </v-btn>
-            <v-btn icon @click="deleteTask(item)" size="small" flat>
+            <v-btn icon @click="confirmDelete(item)" size="small" flat>
               <v-icon color="red">mdi-delete</v-icon>
             </v-btn>
            </div>
@@ -213,6 +213,22 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <v-dialog v-model="deleteDialog" max-width="500">
+            <v-card>
+                <v-card-title class="text-h5 mt-3 text-center">
+                  Delete Task
+                  <v-icon color="red" size="small" class="mr-1 mb-1">mdi-delete</v-icon>
+                </v-card-title>
+                <v-card-text class="text-center">
+                   Are you sure you want to delete this Task?
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                     <v-btn color="primary" @click="deleteDialog = false">No</v-btn>
+                    <v-btn color="red" @click="deleteTask">Yes</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
       <v-snackbar v-model="snackbar.show" :color="snackbar.color" style="position: absolute; right: 100px; bottom: 2px"
         :timeout="snackbar.timeout" location="bottom">
         {{ snackbar.text }}
@@ -222,10 +238,10 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import axiosInstance from '@/axios'
 import { useAuthStore } from '@/stores/auth'
-import { onMounted } from 'vue'
+import { formatDate } from '@/utils/dateFormatter';
 const authStore = useAuthStore()
 
 const snackbar = ref({
@@ -253,6 +269,8 @@ const headers = ref(
 )
 const tasks = ref([])
 const dialog = ref(false)
+const deleteDialog = ref(false)
+const itemToDelete = ref(null)
 const isSubmitting = ref(false)
 const editFlag = ref(false)
 const valid = ref(false)
@@ -282,7 +300,7 @@ const task = ref({
   title: '',
   description: '',
   status: 'Created',
-  priority: 'Low',
+  priority: 'Medium',
   dueDate: '',
   project: '',
 })
@@ -327,7 +345,7 @@ const saveTask = async (taskToEdit) => {
         }
       } else {
         // Create new task
-        const response = await axiosInstance.post('/api/tasks', newTask, {
+        const response = await axiosInstance.post('/api/tasks/createNew', newTask, {
           headers: { Authorization: AuthStr }
         })
         if (response.status === 201) {
@@ -365,8 +383,27 @@ const editTask = (item) => {
   task.value = { ...item }
   dialog.value = true
 }
-const deleteTask = (item) => {
-  console.log(item)
+const confirmDelete = (item) => {
+  itemToDelete.value = item
+  deleteDialog.value = true
+}
+const deleteTask = async() => {
+  try {
+    const token = authStore.token
+    const AuthStr = 'Bearer '.concat(token)
+
+    const response = await axiosInstance.delete(`/api/tasks/deleteTask/${itemToDelete.value._id}`, { headers: { Authorization: AuthStr } })
+    if (response.status === 200) {
+       showSnackbar('Task Deleted Successfully', 'teal')
+       getTasks()
+    }
+
+  } catch (error) {
+    console.log("Error Deleting Task", error)
+    showSnackbar('Error Deleting Task')
+  } finally {
+    deleteDialog.value = false
+  }
 }
 const getUserImage = async (id) => {
   if (userImages.value[id]) {
