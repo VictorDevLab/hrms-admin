@@ -3,6 +3,7 @@ import Home from '../pages/Home.vue'
 import ManagerCentral from '../pages/AdminCentral/index.vue'
 import HrSelfService from '../pages/HrSelfService/index.vue'
 import MyWork from '../pages/MyWork/index.vue'
+import TrainingAndDev from '../pages/TrainingAndDev\'t/index.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/manager-central',
     name: 'ManagerCentral',
     component: ManagerCentral
+  },
+  {
+    path: '/training-and-development',
+    name: 'TrainingAndDev',
+    component: TrainingAndDev
   },
 //   {
 //     path: '/payroll-central',

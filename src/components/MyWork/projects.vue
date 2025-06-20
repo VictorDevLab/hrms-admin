@@ -14,7 +14,7 @@
             <v-divider></v-divider>
           </template>
 
-          <!-- Task title column -->
+          <!-- Project title column -->
           <template v-slot:item.title="{ item }" class="py-4">
             <div>
               <div class="font-weight-medium mb-1">{{ item.title }}</div>
@@ -49,7 +49,7 @@
              <v-btn icon @click="editProject(item)" size="small" flat>
               <v-icon color="blue">mdi-pencil</v-icon>
             </v-btn>
-            <v-btn icon @click="deleteProject(item)" size="small" flat>
+            <v-btn icon @click="confirmDelete(item)" size="small" flat>
               <v-icon color="red">mdi-delete</v-icon>
             </v-btn>
            </div>
@@ -212,6 +212,22 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+         <v-dialog v-model="deleteDialog" max-width="500">
+            <v-card>
+                <v-card-title class="text-h5 mt-3 text-center">
+                  Delete Project
+                  <v-icon color="red" size="small" class="mr-1 mb-1">mdi-delete</v-icon>
+                </v-card-title>
+                <v-card-text class="text-center">
+                   Are you sure you want to delete this Project?
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                     <v-btn color="primary" @click="deleteDialog = false">No</v-btn>
+                    <v-btn color="red" @click="deleteProject">Yes</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
       <v-snackbar v-model="snackbar.show" :color="snackbar.color" style="position: absolute; right: 100px; bottom: 2px"
         :timeout="snackbar.timeout" location="bottom">
         {{ snackbar.text }}
@@ -251,7 +267,7 @@ const valid = ref(false)
 const form = ref(null)
 const headers = ref(
   [
-    { title: 'Task', key: 'title', align: 'start', sortable: true, width: '40%' },
+    { title: 'Project', key: 'title', align: 'start', sortable: true, width: '40%' },
     { title: 'Assigned To', key: 'assignedTo', align: 'center', sortable: false, width: '15%' },
     { title: 'Priority', key: 'priority', align: 'center', sortable: true, width: '20%' },
     { title: 'Status', key: 'status', align: 'center', sortable: true, width: '25%' },
@@ -273,6 +289,8 @@ const statusOptions = ['Created', 'In Progress', 'Completed', 'On Hold']
 const userImages = ref({})
 const isSubmitting = ref(false)
 const editFlag = ref(false)
+const deleteDialog = ref(false)
+const itemToDelete = ref(null)
 
 // Computed values for summary cards
 const todaysProjects = computed(() => 8)
@@ -356,8 +374,27 @@ const editProject = (item) => {
   project.value = { ...item }
   dialog.value = true
 }
-const deleteProject = (item) => {
-  console.log(item)
+const confirmDelete = (item) => {
+  itemToDelete.value = item
+  deleteDialog.value = true
+}
+const deleteProject = async() => {
+  try {
+    const token = authStore.token
+    const AuthStr = 'Bearer '.concat(token)
+
+    const response = await axiosInstance.delete(`/api/projects/deleteProject/${itemToDelete.value._id}`, { headers: { Authorization: AuthStr } })
+    if (response.status === 200) {
+       showSnackbar('Project Deleted Successfully', 'teal')
+       getProjects()
+    }
+
+  } catch (error) {
+    console.log("Error Deleting Project", error)
+    showSnackbar('Error Deleting Project')
+  } finally {
+    deleteDialog.value = false
+  }
 }
 const getUserImage = async (id) => {
   if (userImages.value[id]) {

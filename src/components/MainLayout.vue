@@ -179,10 +179,10 @@ const menuItems = ref([
   { title: 'HR Self Service', icon: 'mdi-account-group', route: '/hr-self-service', color: 'green' },
   { title: 'Manager Central', icon: 'mdi-shield-account', route: '/manager-central', color: 'deep-purple' },
   //   { title: 'My Projects', icon: 'mdi-folder-multiple', route: '/my-projects', color: 'light-blue' },
-  { title: 'Training & Development', icon: 'mdi-school', route: '/trainings', color: 'pink' },
-  { title: 'Employee Transition', icon: 'mdi-account-switch', route: '/employee-transition', color: 'red' },
-  { title: 'Payroll Central', icon: 'mdi-cash-multiple', route: '/payroll-central', color: 'green' },
-  { title: 'Performance Hub', icon: 'mdi-speedometer', route: '/performance', color: 'red' },
+  { title: 'Training & Development', icon: 'mdi-school', route: '/training-and-development', color: 'pink' },
+//   { title: 'Employee Transition', icon: 'mdi-account-switch', route: '/employee-transition', color: 'red' },
+//   { title: 'Payroll Central', icon: 'mdi-cash-multiple', route: '/payroll-central', color: 'green' },
+//   { title: 'Performance Hub', icon: 'mdi-speedometer', route: '/performance', color: 'red' },
   { title: 'Assets', icon: 'mdi-laptop', route: '/assets', color: 'orange-darken-2' },
   { title: 'Reports', icon: 'mdi-file-chart', route: '/reports', color: 'blue-darken-2' }
 ])
