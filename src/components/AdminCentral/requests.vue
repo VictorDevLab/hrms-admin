@@ -196,7 +196,6 @@ const authStore = useAuthStore()
 const user = authStore.user.data
 const approver = ref(null)
 
-// Dummy data for requests
 const requests = ref([
   {
     id: 1,

@@ -91,7 +91,7 @@
     </v-row>
   </div>
   <div v-else>
-    <Employment :employee="selectedEmployee" :users="employees" @closeEmpForm="selectedEmployee = null"/>
+    <Employment :employee="selectedEmployee" :users="employees" @employeeUpdated="employeeUpdated" @closeEmpForm="selectedEmployee = null"/>
   </div>
 
 </template>
@@ -131,6 +131,10 @@ const employeeAdded = () => {
 const closeEmpForm = () => {
    addNewEmp.value = false;
 };
+const employeeUpdated = async() => {
+   await getAllEmployees()
+   await authStore.getUserDetails
+}
 const selectEmployee = (employee) => {
   selectedEmployee.value = employee;
   console.log("Selected Employee:", selectedEmployee.value);

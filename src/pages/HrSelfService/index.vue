@@ -46,9 +46,9 @@
         color: 'blue',
     },
     {
-        title: 'Requests',
+        title: 'Your Requests',
         id: '#requests',
-        icon: 'mdi-account-group',
+        icon: 'mdi-clipboard-text-clock',
         color: 'green',
     },
     // {
@@ -60,7 +60,7 @@
     {
         title: 'Team <br/> Calendar',
         id: '#team-calendar',
-        icon: 'mdi-chart-line',
+        icon: 'mdi-calendar-clock-outline',
         color: 'purple',
     }
 ])

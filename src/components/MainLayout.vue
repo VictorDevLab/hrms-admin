@@ -219,8 +219,18 @@ const logout = () => {
 const selectMenu = (menu) => {
     selectedMenu.value = menu
 }
-onMounted(()=> {
-    selectedMenu.value = "Dashboard"
+onMounted(() => {
+    //get the current route and set the selected menu accordingly
+    const currentRoute = window.location.pathname;
+    console.log("Current Route:", currentRoute);
+    if (currentRoute === '/login') {
+        selectedMenu.value = "Dashboard";
+    } else {
+        const foundMenu = menuItems.value.find(item => item.route === currentRoute);
+        if (foundMenu) {
+            selectedMenu.value = foundMenu.title;
+        }
+    }
 })
 </script>
 

@@ -278,7 +278,8 @@ import { formatDate } from '@/utils/dateFormatter';
 
 const authStore = useAuthStore()
 //.data, object from pinia store
-const user = authStore.user.data
+const user = ref(authStore.user.data)
+console.log("user", user.value)
 const approver = ref(null)
 const requests = ref([])
 
@@ -347,25 +348,25 @@ const selectRequestType = () => {
   selectedLeaveRequest.value = leaveRequest.value?.leaveType
   switch (leaveRequest.value.leaveType) {
     case 'Annual Leaves':
-      userDaysRemaining.value = user.leaves.annualLeaves
+      userDaysRemaining.value = user.value.leaves.annualLeaves
       break
     case 'Sick Leaves':
-      userDaysRemaining.value = user.leaves.sickLeaves
+      userDaysRemaining.value = user.value.leaves.sickLeaves
       break
     case 'Maternity Leaves':
-      userDaysRemaining.value = user.leaves.maternityLeaves
+      userDaysRemaining.value = user.value.leaves.maternityLeaves
       break
     case 'Paternity Leaves':
-      userDaysRemaining.value = user.leaves.paternityLeaves
+      userDaysRemaining.value = user.value.leaves.paternityLeaves
       break
     case 'Emergency Leaves':
-      userDaysRemaining.value = user.leaves.emergencyLeaves
+      userDaysRemaining.value = user.value.leaves.emergencyLeaves
       break
     case 'Compassionate Leaves':
-      userDaysRemaining.value = user.leaves.compassionateLeaves
+      userDaysRemaining.value = user.value.leaves.compassionateLeaves
       break
     case 'Study Leaves':
-      userDaysRemaining.value = user.leaves.studyLeaves
+      userDaysRemaining.value = user.value.leaves.studyLeaves
       break
     default:
       userDaysRemaining.value = 0
@@ -380,7 +381,7 @@ const submitForm = async () => {
   const payload = {
     ...leaveRequest.value,
     userId: authStore.userId,
-    approver: user.employment.manager
+    approver: user.value.employment.manager
   }
   console.log("payload", payload)
   if (valid) {
