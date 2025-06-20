@@ -1,5 +1,4 @@
 import {defineStore} from 'pinia';
-import axios from 'axios';
 import router from '../router'; 
 import axiosInstance from '../axios'
 
@@ -48,10 +47,17 @@ export const useAuthStore = defineStore('auth', {
                 this.logout(); 
             }
         },
-        logout() {
-            this.token = null;
-            this.userId = null;
-            this.isAuthenticated = false;
+        async logout() {
+            try {
+                const response = await axiosInstance.post('/api/auth/logout', {}, { withCredentials: true });
+                console.log("logout...", response)
+                this.token = null;
+                this.userId = null;
+                this.isAuthenticated = false;
+                router.push('/login');
+            } catch (error) {
+                console.error('Logout failed:', error);
+            }
         }
     }
 })

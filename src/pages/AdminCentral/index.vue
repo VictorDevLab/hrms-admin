@@ -54,13 +54,13 @@
     {
         title: 'Employee <br/> Requests',
         id: '#employee-requests',
-        icon: 'mdi-shield-account',
+        icon: 'mdi-account-supervisor',
         color: 'orange',
     },
     {
         title: 'Team <br/> Calendar',
         id: '#team-calendar',
-        icon: 'mdi-chart-line',
+        icon: 'mdi-calendar-clock-outline',
         color: 'purple',
     }
 ])

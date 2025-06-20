@@ -32,21 +32,21 @@
   import Overview from '@/components/TrainingAndDev\'t/overview.vue'
   import Trainings from '@/components/TrainingAndDev\'t/trainings.vue'
   
-  const selectedCard = ref('#overview');
+  const selectedCard = ref('#trainings');
 
   const cards = ref([
-    {
-        title: 'Overview',
-        id: '#overview',
-        icon: 'mdi-briefcase',
-        color: 'blue',
-    },
-    {
-        title: 'Training Programs',
-        id: '#trainings',
-        icon: 'mdi-account-group',
-        color: 'green',
-    },
+      {
+          title: 'Training Programs',
+          id: '#trainings',
+          icon: 'mdi-account-group',
+          color: 'green',
+      },
+      {
+          title: 'Training Overview',
+          id: '#overview',
+          icon: 'mdi-briefcase',
+          color: 'blue',
+      },
 ])
 
 

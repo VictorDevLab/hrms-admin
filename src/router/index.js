@@ -4,12 +4,18 @@ import ManagerCentral from '../pages/AdminCentral/index.vue'
 import HrSelfService from '../pages/HrSelfService/index.vue'
 import MyWork from '../pages/MyWork/index.vue'
 import TrainingAndDev from '../pages/TrainingAndDev\'t/index.vue'
+import Login from '../pages/Login/index.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: Home
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
   {
     path: '/my-work',

@@ -44,7 +44,7 @@
     {
         title: 'My Projects',
         id: '#projects',
-        icon: 'mdi-account-group',
+        icon: 'mdi-file-tree',
         color: 'green',
     },
 ])
