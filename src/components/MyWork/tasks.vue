@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" md="7" class="custom-scrollbar">
         <v-data-table :headers="headers" :items="tasks" class="elevation-1 custom-scrollbar" :height="590" fixed-header
-          hide-default-footer :items-per-page="-1">
+          hide-default-footer :items-per-page="-1" :loading="loadingTasks">
           <!-- Custom header -->
           <template v-slot:top>
             <v-toolbar flat class="bg-white">
@@ -13,7 +13,9 @@
             </v-toolbar>
             <v-divider></v-divider>
           </template>
-
+          <template v-slot:loading>
+            <v-skeleton-loader type="table-row@9"></v-skeleton-loader>
+          </template>
           <!-- Task title column -->
           <template v-slot:item.title="{ item }" class="py-4">
             <div>
@@ -25,7 +27,7 @@
           <!-- Assignee column -->
           <template v-slot:item.assignedTo="{ item }">
             <v-avatar size="32" :color="item.assignedTo">
-                <v-img :src="userImages[item.assignedTo] || '../../assets/default-avatar.jpg'" />
+              <v-img :src="userImages[item.assignedTo] || '../../assets/default-avatar.jpg'" />
             </v-avatar>
           </template>
 
@@ -45,14 +47,14 @@
           </template>
           <!-- action to view/edit-->
           <template v-slot:item.actions="{ item }">
-           <div class="d-flex align-center justify-end">
-             <v-btn icon @click="editTask(item)" size="small" flat>
-              <v-icon color="blue">mdi-pencil</v-icon>
-            </v-btn>
-            <v-btn icon @click="confirmDelete(item)" size="small" flat>
-              <v-icon color="red">mdi-delete</v-icon>
-            </v-btn>
-           </div>
+            <div class="d-flex align-center justify-end">
+              <v-btn icon @click="editTask(item)" size="small" flat>
+                <v-icon color="blue">mdi-pencil</v-icon>
+              </v-btn>
+              <v-btn icon @click="confirmDelete(item)" size="small" flat>
+                <v-icon color="red">mdi-delete</v-icon>
+              </v-btn>
+            </div>
           </template>
         </v-data-table>
       </v-col>
@@ -131,7 +133,7 @@
                       <v-col cols="auto">
                         <v-icon color="blue" class="me-1 mb-4">mdi-format-list-bulleted</v-icon>
                         <span class="text-h3 font-weight-bold text-blue">{{ inProgressTasks
-                        }}</span>
+                          }}</span>
                       </v-col>
                     </v-row>
                   </v-col>
@@ -207,28 +209,29 @@
             <v-btn color="grey-darken-1" variant="text" @click="closeDialog">
               Cancel
             </v-btn>
-            <v-btn color="primary" variant="elevated" :loading="isSubmitting" :disabled="!valid" @click="saveTask(task)">
+            <v-btn color="primary" variant="elevated" :loading="isSubmitting" :disabled="!valid"
+              @click="saveTask(task)">
               {{ editFlag ? 'Edit Task': 'Create Task' }}
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
       <v-dialog v-model="deleteDialog" max-width="500">
-            <v-card>
-                <v-card-title class="text-h5 mt-3 text-center">
-                  Delete Task
-                  <v-icon color="red" size="small" class="mr-1 mb-1">mdi-delete</v-icon>
-                </v-card-title>
-                <v-card-text class="text-center">
-                   Are you sure you want to delete this Task?
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                     <v-btn color="primary" @click="deleteDialog = false">No</v-btn>
-                    <v-btn color="red" @click="deleteTask">Yes</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+        <v-card>
+          <v-card-title class="text-h5 mt-3 text-center">
+            Delete Task
+            <v-icon color="red" size="small" class="mr-1 mb-1">mdi-delete</v-icon>
+          </v-card-title>
+          <v-card-text class="text-center">
+            Are you sure you want to delete this Task?
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" @click="deleteDialog = false">No</v-btn>
+            <v-btn color="red" @click="deleteTask">Yes</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <v-snackbar v-model="snackbar.show" :color="snackbar.color" style="position: absolute; right: 100px; bottom: 2px"
         :timeout="snackbar.timeout" location="bottom">
         {{ snackbar.text }}
@@ -268,6 +271,7 @@ const headers = ref(
   ]
 )
 const tasks = ref([])
+const loadingTasks = ref(false)
 const dialog = ref(false)
 const deleteDialog = ref(false)
 const itemToDelete = ref(null)
@@ -365,6 +369,7 @@ const saveTask = async (taskToEdit) => {
   }
 }
 const getTasks = async () => {
+  loadingTasks.value = true
   try {
     const token = authStore.token
     const AuthStr = 'Bearer '.concat(token)
@@ -376,6 +381,8 @@ const getTasks = async () => {
 
   } catch (error) {
     console.log("Error Fetching Tasks", error)
+  } finally {
+    loadingTasks.value = false
   }
 }
 const editTask = (item) => {
