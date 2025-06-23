@@ -129,16 +129,14 @@
               :class="{ 'bg-blue-lighten-5': selectedRequest?._id === request._id }" @click="selectRequest(request)">
               <template v-slot:prepend>
                 <v-avatar size="40" class="mr-3">
-                  <v-img :src="user.personal.image" :alt="user.personal.firstName"></v-img>
+                  <v-img :src="request.user.image" :alt="request.user.name"></v-img>
                 </v-avatar>
               </template>
 
               <v-list-item-content>
                 <div class="d-flex justify-space-between align-center mb-1">
                   <div>
-                    <div class="font-weight-medium text-body-2">{{ user.personal.firstName }} {{ user.personal.lastName
-                      }}
-                    </div>
+                    <div class="font-weight-medium text-body-2">{{ request.user.name }}</div>
                     <div class="text-caption text-grey-darken-1">{{ request.leaveType }}</div>
                   </div>
                   <div class="text-right">
@@ -279,7 +277,6 @@ import { formatDate } from '@/utils/dateFormatter';
 const authStore = useAuthStore()
 //.data, object from pinia store
 const user = ref(authStore.user.data)
-console.log("user", user.value)
 const approver = ref(null)
 const requests = ref([])
 
