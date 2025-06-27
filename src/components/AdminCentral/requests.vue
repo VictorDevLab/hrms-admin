@@ -1,7 +1,7 @@
 <template>
   <v-row class="ma-0">
     <!-- Left Panel - All Pending Requests -->
-    <v-col cols="6" class="pa-2">
+    <v-col cols="12" md="6" class="pa-2">
       <v-card elevation="2" rounded="lg" class="h-100">
         <v-card-title class="text-h6 pa-3 d-flex align-center" style="background-color: #f5f5f5;">
           <v-icon class="mr-2">mdi-clipboard-list</v-icon>
@@ -73,7 +73,7 @@
     </v-col>
 
     <!-- Right Panel - Request Details -->
-    <v-col cols="6" class="pa-2">
+    <v-col cols="12" md="6" class="pa-2">
       <v-card elevation="2" rounded="lg" class="h-100" v-if="selectedRequest">
         <v-card-title class="text-h6 pa-3 d-flex align-center text-blue-darken-2" style="background-color: #e3f2fd;">
           <v-icon class="mr-2">mdi-information</v-icon>

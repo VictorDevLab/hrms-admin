@@ -4,6 +4,7 @@ import ManagerCentral from '../pages/AdminCentral/index.vue'
 import HrSelfService from '../pages/HrSelfService/index.vue'
 import MyWork from '../pages/MyWork/index.vue'
 import TrainingAndDev from '../pages/TrainingAndDev\'t/index.vue'
+import Assets from '../pages/Assets/index.vue'
 import Login from '../pages/Login/index.vue'
 
 const routes = [
@@ -42,11 +43,11 @@ const routes = [
 //     name: 'PayrollCentral',
 //     component: () => import('../pages/PayrollCentral.vue')
 //   },
-//   {
-//     path: '/assets',
-//     name: 'Assets',
-//     component: () => import('../pages/Assets.vue')
-//   },
+  {
+    path: '/assets',
+    name: 'Assets',
+    component: Assets
+  },
 //   {
 //     path: '/profile',
 //     name: 'Profile',
