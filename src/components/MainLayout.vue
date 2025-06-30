@@ -195,13 +195,13 @@ const secondaryMenuItems = ref([
     {
         title: 'My Profile',
         icon: 'mdi-account',
-        route: '/my-profile',
+        route: '/profile',
         color: 'brown-darken-1'
     },
     {
         title: 'Support',
         icon: 'mdi-face-agent',
-        route: '/my-profile',
+        route: '/support',
         color: 'orange-darken-4'
     },
 
