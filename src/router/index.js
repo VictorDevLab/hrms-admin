@@ -6,6 +6,7 @@ import MyWork from '../pages/MyWork/index.vue'
 import TrainingAndDev from '../pages/TrainingAndDev\'t/index.vue'
 import Assets from '../pages/Assets/index.vue'
 import Reports from '../pages/Stats/reports.vue'
+import Profile from '../pages/Profile/index.vue'
 import Login from '../pages/Login/index.vue'
 
 const routes = [
@@ -54,11 +55,11 @@ const routes = [
     name: 'Assets',
     component: Assets
   },
-//   {
-//     path: '/profile',
-//     name: 'Profile',
-//     component: () => import('../pages/Profile.vue')
-//   },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
  {
     path: '/configurations',
     name: 'Settings',

@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-4">
-    <!-- Top Statistics Row -->
+    <!-- Statistics-->
     <v-row class="mb-6">
       <v-col cols="12" md="2">
         <v-card class="pa-4 text-center" elevation="2">
@@ -56,7 +56,7 @@
       </v-col>
     </v-row>
 
-    <!-- Middle Row - Department Distribution and Absence Statistics -->
+    <!--Department Distribution and Absence Statistics -->
     <v-row class="mb-6">
       <v-col cols="12" lg="8">
         <v-card elevation="2">
@@ -91,7 +91,7 @@
       </v-col>
     </v-row>
 
-    <!-- Bottom Row - Document Expiry and Self Service Request -->
+    <!-- Document Expiry and Self Service Request -->
     <v-row>
       <v-col cols="12" lg="6">
         <v-card elevation="2">
