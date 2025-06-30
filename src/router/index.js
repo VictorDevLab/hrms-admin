@@ -6,6 +6,7 @@ import MyWork from '../pages/MyWork/index.vue'
 import TrainingAndDev from '../pages/TrainingAndDev\'t/index.vue'
 import Assets from '../pages/Assets/index.vue'
 import Reports from '../pages/Stats/reports.vue'
+import Support from '../pages/Support/index.vue'
 import Profile from '../pages/Profile/index.vue'
 import Login from '../pages/Login/index.vue'
 
@@ -44,6 +45,11 @@ const routes = [
     path: '/reports',
     name: 'Reports',
     component: Reports
+  },
+  {
+    path: '/support',
+    name: 'Support',
+    component: Support
   },
 //   {
 //     path: '/payroll-central',
