@@ -323,6 +323,24 @@
         </div>
       </v-col>
     </v-row>
+    <v-row v-else>
+      <v-row>
+      <v-col cols="12" md="4" lg="3">
+        <v-skeleton-loader
+          class="ma-4"
+          max-width="500"
+          height="600"
+          type="card-avatar, article, actions"
+        ></v-skeleton-loader>
+      </v-col>
+
+      <v-col cols="12" md="8">
+        <v-col cols="12" v-for="i in 7" :key="i">
+          <v-skeleton-loader class="ml-2" type="list-item-avatar-two-line"></v-skeleton-loader>
+        </v-col>
+      </v-col>
+    </v-row>
+    </v-row>
   </v-container>
 </template>
 
