@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    // baseURL: 'https://hrms-api-arw0.onrender.com',
-    baseURL: 'http://localhost:3001',
-    withCredentials: true, 
+  baseURL: 'https://hrms-api-arw0.onrender.com',
+  withCredentials: true, 
 });
 
 axiosInstance.interceptors.request.use(
