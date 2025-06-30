@@ -5,6 +5,7 @@ import HrSelfService from '../pages/HrSelfService/index.vue'
 import MyWork from '../pages/MyWork/index.vue'
 import TrainingAndDev from '../pages/TrainingAndDev\'t/index.vue'
 import Assets from '../pages/Assets/index.vue'
+import Reports from '../pages/Stats/reports.vue'
 import Login from '../pages/Login/index.vue'
 
 const routes = [
@@ -37,6 +38,11 @@ const routes = [
     path: '/training-and-development',
     name: 'TrainingAndDev',
     component: TrainingAndDev
+  },
+  {
+    path: '/reports',
+    name: 'Reports',
+    component: Reports
   },
 //   {
 //     path: '/payroll-central',

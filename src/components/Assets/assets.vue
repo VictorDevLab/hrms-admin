@@ -20,7 +20,7 @@
 
 
                     <!-- Asset List -->
-                    <div style="max-height: 400px; overflow-y: auto;">
+                    <div class="custom-scrollbar" style="max-height: 550px; overflow-y: auto;">
                         <v-card v-for="asset in filteredAssets" :key="asset._id"
                             :class="['mb-3', { 'border-primary': selectedAsset?._id === asset._id }]" variant="outlined"
                             @click="handleAssetClick(asset)" style="cursor: pointer;">
@@ -423,3 +423,13 @@ const getStatusIcon = (status) => {
     }
 };
 </script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px; 
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #8a8a8a; 
+  border-radius: 10px; 
+}
+</style>
