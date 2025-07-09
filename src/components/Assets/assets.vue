@@ -237,7 +237,10 @@
 </template>
 <script setup>
 import { ref, computed, reactive } from 'vue';
+import { useAuthStore } from '@/stores/auth'
 import axiosInstance from '@/axios';
+const authStore = useAuthStore()
+
 const assets = ref([
     {
         _id: '1',
@@ -359,7 +362,10 @@ const handleAddNew = () => {
     });
 };
 
-const handleFormSubmit = () => {
+const handleFormSubmit = async () => {
+    const token = authStore.token
+    const AuthStr = 'Bearer '.concat(token)
+
     if (!formData.assetName || !formData.assetType) {
         alert('Please fill in required fields');
         return;
@@ -385,7 +391,13 @@ const handleFormSubmit = () => {
             assignedTo: formData.assignedTo ? { name: formData.assignedTo } : null,
             assignedDate: formData.assignedTo ? new Date().toISOString().split('T')[0] : null
         };
-        assets.value.push(newAsset);
+        const response = await axiosInstance.post('/api/assets', newAsset, {
+            headers: { Authorization: AuthStr }
+        })
+        if (response.status === 200) {
+            assets.value = response.data
+        }
+        console.log("res ya assets", response)
     }
     resetForm();
 };
