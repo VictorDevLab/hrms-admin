@@ -236,67 +236,67 @@
     </v-row>
 </template>
 <script setup>
-import { ref, computed, reactive } from 'vue';
+import { ref, computed, reactive, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth'
 import axiosInstance from '@/axios';
 const authStore = useAuthStore()
 
 const assets = ref([
-    {
-        _id: '1',
-        assetName: 'Computer',
-        assetType: 'Access',
-        assetCode: 'NNACC-009',
-        assignedTo: { name: 'Bryan Parker', avatar: '👤' },
-        assignedDate: '2024-01-15',
-        status: 'Assigned',
-        description: 'Dell Laptop for development work',
-        location: 'Marina Plaza, Dubai'
-    },
-    {
-        _id: '2',
-        assetName: 'Accessories',
-        assetType: 'Computer',
-        assetCode: 'NNCOMPUTERRR-004',
-        assignedTo: null,
-        assignedDate: null,
-        status: 'Available',
-        description: 'Wireless mouse and keyboard set',
-        location: 'Marina Plaza, Dubai'
-    },
-    {
-        _id: '3',
-        assetName: 'Accessories',
-        assetType: 'Computer',
-        assetCode: 'NNCOMPUTERRR-003',
-        assignedTo: null,
-        assignedDate: null,
-        status: 'Available',
-        description: 'USB Hub and cables',
-        location: 'Sky Tower, Abu Dhabi'
-    },
-    {
-        _id: '4',
-        assetName: 'Computer',
-        assetType: 'Access',
-        assetCode: 'NNACC-008',
-        assignedTo: null,
-        assignedDate: null,
-        status: 'Maintenance',
-        description: 'Desktop computer for office use',
-        location: 'Dubai Investment Park'
-    },
-    {
-        _id: '5',
-        assetName: 'Computer',
-        assetType: 'Access',
-        assetCode: 'NNACC-007',
-        assignedTo: { name: 'Sarah Johnson', avatar: '👤' },
-        assignedDate: '2024-02-10',
-        status: 'Assigned',
-        description: 'MacBook Pro for design work',
-        location: 'Marina Plaza, Dubai'
-    }
+    // {
+    //     _id: '1',
+    //     assetName: 'Computer',
+    //     assetType: 'Access',
+    //     assetCode: 'NNACC-009',
+    //     assignedTo: { name: 'Bryan Parker', avatar: '👤' },
+    //     assignedDate: '2024-01-15',
+    //     status: 'Assigned',
+    //     description: 'Dell Laptop for development work',
+    //     location: 'Marina Plaza, Dubai'
+    // },
+    // {
+    //     _id: '2',
+    //     assetName: 'Accessories',
+    //     assetType: 'Computer',
+    //     assetCode: 'NNCOMPUTERRR-004',
+    //     assignedTo: null,
+    //     assignedDate: null,
+    //     status: 'Available',
+    //     description: 'Wireless mouse and keyboard set',
+    //     location: 'Marina Plaza, Dubai'
+    // },
+    // {
+    //     _id: '3',
+    //     assetName: 'Accessories',
+    //     assetType: 'Computer',
+    //     assetCode: 'NNCOMPUTERRR-003',
+    //     assignedTo: null,
+    //     assignedDate: null,
+    //     status: 'Available',
+    //     description: 'USB Hub and cables',
+    //     location: 'Sky Tower, Abu Dhabi'
+    // },
+    // {
+    //     _id: '4',
+    //     assetName: 'Computer',
+    //     assetType: 'Access',
+    //     assetCode: 'NNACC-008',
+    //     assignedTo: null,
+    //     assignedDate: null,
+    //     status: 'Maintenance',
+    //     description: 'Desktop computer for office use',
+    //     location: 'Dubai Investment Park'
+    // },
+    // {
+    //     _id: '5',
+    //     assetName: 'Computer',
+    //     assetType: 'Access',
+    //     assetCode: 'NNACC-007',
+    //     assignedTo: { name: 'Sarah Johnson', avatar: '👤' },
+    //     assignedDate: '2024-02-10',
+    //     status: 'Assigned',
+    //     description: 'MacBook Pro for design work',
+    //     location: 'Marina Plaza, Dubai'
+    // }
 ]);
 
 const selectedAsset = ref(null);
@@ -361,6 +361,20 @@ const handleAddNew = () => {
         location: ''
     });
 };
+const getAssets = async () => {
+    const token = authStore.token
+    const AuthStr = 'Bearer '.concat(token)
+    try {
+        const response = await axiosInstance.get('/api/assets', {
+            headers: { Authorization: AuthStr }
+        })
+        if (response.status === 200) {
+            assets.value = response.data
+        }
+    } catch (error) {
+        console.error('Error fetching assets:', error)
+    }
+}
 
 const handleFormSubmit = async () => {
     const token = authStore.token
@@ -388,7 +402,7 @@ const handleFormSubmit = async () => {
             _id: Date.now().toString(),
             ...formData,
             assetCode: `ASSET-${Date.now()}`,
-            assignedTo: formData.assignedTo ? { name: formData.assignedTo } : null,
+            assignedTo: formData.assignedTo ? formData.assignedTo : null,
             assignedDate: formData.assignedTo ? new Date().toISOString().split('T')[0] : null
         };
         const response = await axiosInstance.post('/api/assets', newAsset, {
@@ -400,6 +414,7 @@ const handleFormSubmit = async () => {
         console.log("res ya assets", response)
     }
     resetForm();
+    await getAssets();
 };
 
 const resetForm = () => {
@@ -434,6 +449,10 @@ const getStatusIcon = (status) => {
         default: return 'mdi-help-circle';
     }
 };
+
+onMounted(async () => {
+    await getAssets();
+});
 </script>
 
 <style scoped>
