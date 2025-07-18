@@ -296,10 +296,14 @@ const deleteDialog = ref(false)
 const itemToDelete = ref(null)
 
 // Computed values for summary cards
-const todaysProjects = computed(() => 8)
-const allProjects = computed(() => 8)
-const createdProjects = computed(() => 6)
-const inProgressProjects = computed(() => 2)
+
+const todaysProjects = computed(() => projects.value.filter(project => {
+  const today = new Date().toISOString().split('T')[0]
+  return project.dueDate.split('T')[0] === today
+}).length)
+const allProjects = computed(() => projects.value.length)
+const createdProjects = computed(() => projects.value.filter(project => project.status === 'Created').length)
+const inProgressProjects = computed(() => projects.value.filter(project => project.status === 'In Progress').length)
 
 const getStatusColor = (status) => {
   switch (status) {

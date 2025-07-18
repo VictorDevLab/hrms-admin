@@ -261,6 +261,8 @@ const showSnackbar = (text, color = 'error') => {
     timeout: 5000
   }
 }
+ const today = new Date().toISOString().split('T')[0]
+ console.log('Today:', today)
 const headers = ref(
   [
     { title: 'Task', key: 'title', align: 'start', sortable: true, width: '40%' },
@@ -280,10 +282,13 @@ const editFlag = ref(false)
 const valid = ref(false)
 const form = ref(null)
 // Computed values for summary cards
-const todaysTasks = computed(() => 5)
-const allTasks = computed(() => 3)
-const createdTasks = computed(() => 2)
-const inProgressTasks = computed(() => 2)
+const todaysTasks = computed(() => tasks.value.filter(task => {
+  const today = new Date().toISOString().split('T')[0]
+  return task.dueDate.split('T')[0] === today
+}).length)
+const allTasks = computed(() => tasks.value.length)
+const createdTasks = computed(() => tasks.value.filter(task => task.status === 'Created').length)
+const inProgressTasks = computed(() => tasks.value.filter(task => task.status === 'In Progress').length)
 
 const userImages = ref({}) // Cache for user images
 const getStatusColor = (status) => {
@@ -353,7 +358,7 @@ const saveTask = async (taskToEdit) => {
           headers: { Authorization: AuthStr }
         })
         if (response.status === 201) {
-          showSnackbar('Task Created Successfully', 'success')
+          showSnackbar('Task Created Successfully', 'teal')
           tasks.value.push(response.data)
         }
       }
