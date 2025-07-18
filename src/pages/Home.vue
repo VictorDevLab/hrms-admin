@@ -8,7 +8,7 @@
                         <div class="d-flex align-center mb-4">
                             <v-icon size="40" color="orange" class="mr-3">mdi-weather-sunny</v-icon>
                             <div>
-                                <h2 class="font-weight-light indigo-darken-4 h1">Good Evening, Victor K Dev</h2>
+                                <h2 class="font-weight-light indigo-darken-4 h1">{{ greeting }}, {{ user.personal?.firstName }} {{ user.personal?.lastName }}</h2>
                                 <p class="h2 text-grey-darken-1 mb-0">Welcome back to your dashboard</p>
                             </div>
                         </div>
@@ -17,7 +17,7 @@
             </v-col>
             <v-spacer></v-spacer>
             <v-col cols="3" class="text-center">
-                <v-btn flat color="#FF8181" class="text-white mt-4 mr-6 rounded-xl" @click="$router.push('/clock-in')">
+                <v-btn flat color="#FF8181" class="text-white mt-4 mr-6 rounded-xl" @click="console.log('Clocked in successfully')">
                      <v-icon size="24">mdi-timer</v-icon>clock in
                 </v-btn>
             </v-col>
@@ -99,6 +99,10 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+const authStore = useAuthStore()
+
+const user = authStore.user.data
 
 const router = useRouter()
 
@@ -114,6 +118,25 @@ const currentDate = computed(() => {
         day: now.getDate(),
         month: months[now.getMonth()],
         year: now.getFullYear()
+    }
+})
+const currentTime = computed(() => {
+    const now = new Date()
+    return {
+        hours: now.getHours(),
+        minutes: now.getMinutes(),
+        seconds: now.getSeconds()
+    }
+})
+//greeting based on time of day
+const greeting = computed(() => {
+    const hours = currentTime.value.hours
+    if (hours < 12) {
+        return 'Good Morning'
+    } else if (hours < 18) {
+        return 'Good Afternoon'
+    } else {
+        return 'Good Evening'
     }
 })
 
@@ -171,10 +194,11 @@ const recentActivity = ref([
         color: 'orange'
     }
 ])
-
+const displayMessage = ref('')
 const navigateTo = (route) => {
     router.push(route)
 }
+
 </script>
 
 <style scoped>

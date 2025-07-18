@@ -149,8 +149,8 @@ const snackbar = ref({
   color: 'error',
   timeout: 5000
 })
-const email = ref("")
-const password = ref("")
+const email = ref("julietzara@alpha.com")
+const password = ref("Welcome@123")
 
 const showSnackbar = (text, color = 'error') => {
   snackbar.value = {
