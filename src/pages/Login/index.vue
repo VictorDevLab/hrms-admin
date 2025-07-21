@@ -8,7 +8,7 @@
           </div>
           <div class="ml-4">
             <p class="text-h6 font-weight-semibold gradient-text ma-0">
-              ALPHA  CO.LTD
+              ALPHA CO.LTD
             </p>
           </div>
         </div>
@@ -18,19 +18,14 @@
             <v-col cols="12" lg="6" class="d-none d-lg-flex">
               <div class="text-center preview-section">
                 <div class="preview-container">
-                  <img 
-                    loading="lazy" 
-                    decoding="async" 
-                    src="@/assets/preview.png" 
-                    alt="app preview"
-                    class="preview-img mx-auto"
-                  />
+                  <img loading="lazy" decoding="async" src="@/assets/preview.png" alt="app preview"
+                    class="preview-img mx-auto" />
                   <div class="mt-8">
                     <h2 class="text-h4 text-white font-weight-regular mb-4">
-                      Simple yet powerful HRMS for businesses 
+                      Simple yet powerful HRMS for businesses
                     </h2>
                     <p class="text-grey-lighten-1">
-                      Manage your employees, requests, payroll, assets and much more with ease. 
+                      Manage your employees, requests, assets and much more with ease.
                       <br />
                       <span class="font-weight-bold">Get started today!</span>
                     </p>
@@ -42,15 +37,9 @@
             <v-col cols="12" lg="6" xl="5" class="form-column">
               <v-card class="login-card mx-auto" elevation="8" rounded="lg">
                 <div class="card-header position-relative">
-                  <img 
-                    loading="lazy" 
-                    decoding="async" 
-                    :src="bgimage" 
-                    alt="Login"
-                    class="header-bg"
-                  />
+                  <img loading="lazy" decoding="async" :src="bgimage" alt="Login" class="header-bg" />
                 </div>
-                
+
                 <v-card-text class="pa-0">
                   <div class="position-relative">
                     <div class="px-3">
@@ -63,44 +52,24 @@
                           </div>
                         </div>
                       </div>
-                      
+
                       <div class="login-content px-4">
                         <div class="pt-6 pt-xl-14 mb-6">
-                         
+
                         </div>
 
                         <v-form @submit.prevent="login">
                           <div class="mb-3">
-                            <v-text-field
-                              v-model="email"
-                              label="Email Address"
-                              type="email"
-                              variant="outlined"
-                              density="comfortable"
-                              required
-                            />
+                            <v-text-field v-model="email" label="Email Address" type="email" variant="outlined"
+                              density="comfortable" required />
 
-                            <v-text-field
-                              v-model="password"
-                              label="Password"
-                              :type="showPassword ? 'text' : 'password'"
-                              variant="outlined"
-                              density="comfortable"
-                           
+                            <v-text-field v-model="password" label="Password" :type="showPassword ? 'text' : 'password'"
+                              variant="outlined" density="comfortable"
                               :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                              @click:append-inner="showPassword = !showPassword"
-                              class="mt-4"
-                              required
-                            />
+                              @click:append-inner="showPassword = !showPassword" class="mt-4" required />
 
-                            <v-btn
-                              type="submit"
-                              color="primary"
-                              size="large"
-                              block
-                              :loading="isSubmitting"
-                              class="mt-4"
-                            >
+                            <v-btn type="submit" color="primary" size="large" block :loading="isSubmitting"
+                              class="mt-4">
                               Login
                             </v-btn>
                           </div>
@@ -115,13 +84,8 @@
         </v-container>
       </div>
     </div>
-    
-    <v-snackbar
-      v-model="snackbar.show"
-      :color="snackbar.color"
-      :timeout="snackbar.timeout"
-      location="bottom"
-    >
+
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout" location="bottom">
       {{ snackbar.text }}
     </v-snackbar>
   </div>
@@ -172,13 +136,13 @@ const emit = defineEmits(['login'])
 const login = async () => {
   isSubmitting.value = true
   try {
-   const success = await authStore.login(email.value, password.value)
-  if(success) {
-    showSnackbar('Login successful!', 'success')
-    isSubmitting.value = false
-    email.value = ""
-    password.value = ""
-  } 
+    const success = await authStore.login(email.value, password.value)
+    if (success) {
+      showSnackbar('Login successful!', 'success')
+      isSubmitting.value = false
+      email.value = ""
+      password.value = ""
+    }
   } catch (error) {
     console.error('Login error:', error)
     showSnackbar('Invalid Email or Password.', "error")
@@ -192,6 +156,7 @@ const login = async () => {
 * {
   font-family: 'Rubik', sans-serif;
 }
+
 .login_wrapper {
   background: url("@/assets/nathan-bg.svg") !important;
   overflow: hidden auto;
@@ -200,38 +165,46 @@ const login = async () => {
   display: flex;
   flex-direction: column;
 }
+
 .fill-height {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
+
 .logo-img {
   height: 40px;
 }
+
 @media (min-width: 1400px) {
   .logo-img {
-   height: 50px;
+    height: 50px;
   }
+
   .login_wrapper {
     overflow: auto;
   }
 }
+
 .gradient-text {
   background: linear-gradient(to right, #44A16A, #3582B3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
 .v-container {
   flex: 1;
   display: flex;
   align-items: center;
 }
+
 .v-row {
   margin: 0;
   align-items: center !important;
   justify-content: center !important;
 }
+
 .preview-section {
   display: flex;
   align-items: center;
@@ -252,12 +225,14 @@ const login = async () => {
   max-width: 85%;
   height: auto;
 }
+
 .form-column {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem 1rem;
 }
+
 .login-card {
   width: 100%;
   max-width: 460px;
@@ -268,80 +243,94 @@ const login = async () => {
     max-width: 650px;
   }
 }
+
 @media (max-width: 1023px) {
   .form-column {
     padding: 1rem;
   }
-  
+
   .login-card {
     max-width: 500px;
   }
 }
+
 @media (max-width: 767px) {
   .login_wrapper {
     padding: 0;
   }
-  
+
   .v-container {
     padding: 1rem !important;
   }
-  
+
   .form-column {
     padding: 0.5rem;
   }
-  
+
   .login-card {
     max-width: 100%;
     margin: 0 0.5rem;
   }
 }
+
 .card-header {
   height: 280px;
   overflow: hidden;
   border-radius: 8px 8px 0 0;
 }
+
 .header-bg {
   width: 100%;
   height: 100%;
   object-fit: cover;
   background-color: #40485F;
 }
+
 .login-content {
   min-height: 320px;
 }
+
 @media (min-width: 1200px) {
   .login-content {
     min-height: 350px;
   }
 }
+
 .outlook-btn {
   border-color: #3B82F6 !important;
 }
+
 .outlook-icon {
   height: 40px;
 }
+
 .curve {
   position: absolute;
   top: -8px;
   left: 18px;
   z-index: 1;
 }
+
 .keyhole-icon {
   position: absolute;
   top: -22px;
   left: 2px;
   z-index: 50;
 }
+
 .keyhole-avatar {
   background-color: #1A70D4 !important;
 }
+
 .keyhole-img {
   width: 24px;
   height: 24px;
 }
+
 .curve-parent {
   position: relative;
 }
+
 .curve::before {
   position: absolute;
   top: -27px;
@@ -355,6 +344,7 @@ const login = async () => {
   z-index: 0;
   background: #fff;
 }
+
 :deep(body) {
   overflow: hidden;
 }
