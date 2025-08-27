@@ -349,14 +349,6 @@ const upcomingLeaves = ref([
     type: 'Maternity',
     avatar: 'https://i.pravatar.cc/150?img=4'
   },
-  {
-    id: 5,
-    name: 'Nancy Sundiam',
-    dates: 'Monday, Jun 23, 2025 - Wednesday, Jun 25, 2025',
-    days: '03 Days',
-    type: 'Maternity',
-    avatar: 'https://i.pravatar.cc/150?img=4'
-  }
 ])
 
 const organizationMembers = ref([
