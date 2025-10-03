@@ -244,7 +244,7 @@
           <!-- Action -->
           <v-row class="mt-4">
             <v-col>
-              <v-btn :disabled="selectedRequest.status === 'Completed'" color="error" variant="outlined" class="mr-2">
+              <v-btn @click="withdrawRequest" :disabled="selectedRequest.status === 'Completed'" color="error" variant="outlined" class="mr-2">
                 <v-icon left>mdi-close</v-icon>
                 Withdraw
               </v-btn>
@@ -400,6 +400,9 @@ const submitForm = async () => {
         console.error(err)
     }
   }
+}
+const withdrawRequest = () => {
+    showSnackbar('You are not authorized to withdraw this request', 'red')
 }
 const createRequest = () => {
   leaveRequestCard.value = true
