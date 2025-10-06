@@ -326,7 +326,11 @@ const leaveTypes = ref([
   'Paternity Leaves',
   'Emergency Leaves',
   'Compassionate Leaves',
-  'Study Leaves'
+  'Study Leaves',
+  //for other requests
+  'salary increment',
+  'resignation'
+
 ])
 const leaveOptions = ref([
   'Full Day',
