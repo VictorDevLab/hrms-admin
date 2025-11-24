@@ -1,10 +1,11 @@
 <template>
     <v-app>
         <!-- Navigation Drawer / Sidebar -->
-        <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false" color="white" theme="light"
+        <v-navigation-drawer v-model="drawer" :rail="effectiveRail" permanent
+            @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" color="white" theme="light"
             width="280" rail-width="72" class="ma-0 pa-0 custom-scrollbar" style="border-right: 7px solid #e0e0e0;">
             <!-- Company Logo -->
-            <div class="pa-4 text-center" v-show="!rail">
+            <div class="pa-4 text-center" v-show="!effectiveRail">
                 <v-img src="/src/assets/logo.png" width="210" alt="Company Logo" class="mx-auto"></v-img>
             </div>
 
@@ -18,17 +19,17 @@
                     </v-badge>
                 </template>
 
-                <v-list-item-title v-show="!rail" class="font-weight-bold text-md-h6 mt-6 mr-2">
+                <v-list-item-title v-show="!effectiveRail" class="font-weight-bold text-md-h6 mt-6 mr-2">
                     {{user.personal?.firstName}} <br />
                     {{user.personal?.lastName}}
                 </v-list-item-title>
-                <v-list-item-subtitle v-show="!rail" class="text-grey-darken-4 mr-2">
+                <v-list-item-subtitle v-show="!effectiveRail" class="text-grey-darken-4 mr-2">
                     {{user.employment?.title}}
                 </v-list-item-subtitle>
 
                 <template v-slot:append>
-                    <v-btn variant="tonal" :icon="rail ? 'mdi-chevron-right' : 'mdi-chevron-left'"
-                        @click.stop="rail = !rail" color="blue" size="small"></v-btn>
+                    <v-btn variant="tonal" :icon="(isCompact || manualRail) ? 'mdi-chevron-right' : 'mdi-chevron-left'"
+                        @click.stop="toggleRail" color="blue" size="small"></v-btn>
                 </template>
             </v-list-item>
 
@@ -44,7 +45,7 @@
                             style="font-size: 14px; width: 100%">
                             <div class="d-flex align-center" style="width: 100%">
                                 <v-icon size="24" :icon="item.icon" :color="item.color || 'primary'" class="mr-2 custom-icon" />
-                                <span :style="selectedMenu == item.title ? 'color: white;' : ''">
+                                <span v-show="!effectiveRail" :style="selectedMenu == item.title ? 'color: white;' : ''">
                                     {{ item.title }}
                                 </span>
                             </div>
@@ -65,7 +66,7 @@
                             style="font-size: 14px; width: 100%">
                             <div class="d-flex align-center" style="width: 100%">
                                 <v-icon size="24" :icon="item.icon" :color="item.color || 'primary'" class="mr-2 custom-icon" />
-                                <span :style="selectedMenu == item.title ? 'color: white;' : ''">
+                                <span v-show="!effectiveRail" :style="selectedMenu == item.title ? 'color: white;' : ''">
                                     {{ item.title }}
                                 </span>
                             </div>
@@ -164,10 +165,15 @@
 
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 const drawer = ref(true)
-const rail = ref(false)
+// manualRail: when user toggles collapse in desktop
+const manualRail = ref(false)
+// hovered: temporary expansion while hovering the collapsed drawer
+const hovered = ref(false)
+// isCompact: true when screen is small and we want automatic collapsed state
+const isCompact = ref(false)
 const authStore = useAuthStore()
 
 const user = authStore.user.data
@@ -208,29 +214,63 @@ const secondaryMenuItems = ref([
 ])
 const logoutDialog = ref(false)
 
+// effectiveRail: drawer is in rail (mini) mode when either compact breakpoint active
+// or user manually requested collapse. While hovered, temporarily expand.
+const effectiveRail = computed(() => (isCompact.value || manualRail.value) && !hovered.value)
+
 const logout = () => {
     logoutDialog.value = true
     setTimeout(() => {
-        console.log("Logging out...")
+        console.log('Logging out...')
         authStore.logout()
-    }, 1500) 
+    }, 1500)
 }
 
 const selectMenu = (menu) => {
     selectedMenu.value = menu
 }
-onMounted(() => {
-    //get the current route and set the selected menu accordingly
-    const currentRoute = window.location.pathname;
-    console.log("Current Route:", currentRoute);
-    if (currentRoute === '/login') {
-        selectedMenu.value = "Dashboard";
-    } else {
-        const foundMenu = menuItems.value.find(item => item.route === currentRoute);
-        if (foundMenu) {
-            selectedMenu.value = foundMenu.title;
-        }
+
+const toggleRail = () => {
+    // toggles manual collapse state (useful on desktop)
+    manualRail.value = !manualRail.value
+}
+
+const onMouseEnter = () => {
+    if (isCompact.value || manualRail.value) hovered.value = true
+}
+
+const onMouseLeave = () => {
+    if (isCompact.value || manualRail.value) hovered.value = false
+}
+
+// breakpoint threshold (px) for switching to compact (icons-only) sidebar
+const COMPACT_WIDTH = 1024
+
+const handleResize = () => {
+    isCompact.value = window.innerWidth <= COMPACT_WIDTH
+    // keep drawer visible in compact (icons shown) but collapsed
+    if (isCompact.value) {
+        drawer.value = true
     }
+}
+
+onMounted(() => {
+    handleResize()
+    window.addEventListener('resize', handleResize)
+
+    // get the current route and set the selected menu accordingly
+    const currentRoute = window.location.pathname
+    console.log('Current Route:', currentRoute)
+    if (currentRoute === '/login') {
+        selectedMenu.value = 'Dashboard'
+    } else {
+        const foundMenu = menuItems.value.find(item => item.route === currentRoute)
+        if (foundMenu) selectedMenu.value = foundMenu.title
+    }
+})
+
+onUnmounted(() => {
+    window.removeEventListener('resize', handleResize)
 })
 </script>
 
