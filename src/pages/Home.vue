@@ -17,8 +17,8 @@
             </v-col>
             <v-spacer></v-spacer>
             <v-col cols="3" class="text-center">
-                <v-btn flat color="#FF8181" class="text-white mt-4 mr-6 rounded-xl" @click="console.log('Clocked in successfully')">
-                     <v-icon size="24">mdi-timer</v-icon>clock in
+                <v-btn flat color="#FF8181" class="text-white mt-4 mr-6 rounded-xl" @click="toggleClockInOut">
+                     <v-icon size="24">mdi-timer</v-icon>{{ isClockedIn ? 'clock out' : 'clock in' }}
                 </v-btn>
             </v-col>
         </v-row>
@@ -94,10 +94,14 @@
             </v-col>
         </v-row>
     </div>
+
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout" location="bottom-left">
+        {{ snackbar.text }}
+    </v-snackbar>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 const authStore = useAuthStore()
@@ -105,6 +109,13 @@ const authStore = useAuthStore()
 const user = authStore.user.data
 
 const router = useRouter()
+const isClockedIn = ref(false)
+const snackbar = ref({
+    show: false,
+    text: '',
+    color: 'success',
+    timeout: 3000
+})
 
 const quote = ref("An investment in knowledge pays the best interest.")
 const author = ref("Benjamin Franklin")
@@ -194,9 +205,41 @@ const recentActivity = ref([
         color: 'orange'
     }
 ])
+
 const displayMessage = ref('')
 const navigateTo = (route) => {
     router.push(route)
+}
+
+// Clock in/out functionality
+onMounted(() => {
+    const clockInStatus = localStorage.getItem('isClockedIn')
+    isClockedIn.value = clockInStatus === 'true'
+})
+
+const showToast = (message) => {
+    snackbar.value = {
+        show: true,
+        text: message,
+        color: 'success',
+        timeout: 3000
+    }
+}
+
+const toggleClockInOut = () => {
+    if (!isClockedIn.value) {
+        // Clock in
+        isClockedIn.value = true
+        localStorage.setItem('isClockedIn', 'true')
+        localStorage.setItem('clockInTime', new Date().toISOString())
+        showToast('Successfully clocked in')
+    } else {
+        // Clock out
+        isClockedIn.value = false
+        localStorage.setItem('isClockedIn', 'false')
+        localStorage.removeItem('clockInTime')
+        showToast('Successfully clocked out')
+    }
 }
 
 </script>
